@@ -1,0 +1,22 @@
+Définition de l'enregistrement fichier : (un dossier est aussi un fichier)
+
+Type fichier est enregistrement
+    Est_dossier : boolean; -- true si dossier, false si fichier
+    generique : pointeur sur Generique;
+    metier: pointeur sur Metier;
+Fin Enregistrement;
+
+Type Generique est enregistrement
+    Nom : Chaine de caractère; -- (50 max) Nom du fichier ou nom du dossier
+    Taille : Entier; -- Si fichier taille du fichier en octet Si dossier valeur définie à 10240 octets (10 ko)
+    Permission : Tableau de Entier (3); -- premier entier pour l'utilisateur, deuxième pour le groupe, troisième pour les autres
+Fin Enregistrement;
+
+Type Metier est enregistrement
+    Parent : ptr sur fichier; -- null si racine
+    Fils : Tableau de pointeur sur fichier; -- null si fichier, pointe vers tous les fils si dossier
+    Contenu : Chaine de caractère; -- (max 10 000) contenu du fichier, chaine vide si dossier
+Fin Enregistrement;
+    
+    
+
