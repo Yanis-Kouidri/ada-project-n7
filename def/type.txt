@@ -20,3 +20,6 @@ Fin Enregistrement;
     
     
 
+Définition du type arbre : Le type arbre servira de structure pour le SGF chaque noeud de l'arbre sera un objet de type fichier (donc soit un dossier soit un fichier)
+
+Type T_arbre est pointeur sur T_fichier.
