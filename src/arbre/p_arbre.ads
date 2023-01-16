@@ -12,7 +12,7 @@ package P_Arbre is
     type T_Fichier;
     type T_Tab_Perm is array(1..10) of Character;
 
-    type T_Arbre is ACCESS T_fichier; -- Pointeur sur fichier ou dossier
+    type T_Arbre is ACCESS T_Fichier; -- Pointeur sur fichier ou dossier
     type T_Fichier is 
         RECORD
 
@@ -42,8 +42,13 @@ package P_Arbre is
     -- Post-condition : 
     -- exception : aucune
 
+--------------------------------------------------
+    -- Decoupage
+    --
+    -- Sémantique : Découper un chaine de caractère en fonction d'un caractère spécifique.
+--------------------------------------------------
 
-    Function Decoupage( P_chaine : in string) return P_liste_ustring.T_liste_chainee;
+    Function Decoupage (F_chaine : in String ; F_cible : in Character) return P_liste_ustring.T_liste_chainee;
 
 
 --    Procedure recheche();
