@@ -12,7 +12,7 @@ procedure Test_Arbre is
     
     -- Déclaration de variables
 --    Mon_Arbre : T_Arbre;
-    Test : String := "bin/sbin/src/build";
+    Test : String := "bin/sbin/src/build/";
 
 
 begin
