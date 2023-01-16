@@ -48,8 +48,9 @@ package P_Arbre is
     -- Sémantique : Découper un chaine de caractère en fonction d'un caractère spécifique.
 --------------------------------------------------
 
-    Function Decoupage (F_chaine : in String ; F_cible : in Character) return P_liste_ustring.T_liste_chainee;
+    function Decoupage (F_chaine : in String ; F_cible : in Character) return P_liste_ustring.T_liste_chainee;
 
+    procedure Test_Decoupage (F_Chaine : in String ; F_Cible : in Character);
 
 --    Procedure recheche();
 --    Procedure supprimer();

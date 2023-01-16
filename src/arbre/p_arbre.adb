@@ -2,7 +2,7 @@ with Ada.Integer_Text_IO, Ada.Text_IO ;
 use Ada.Integer_Text_IO, Ada.Text_IO ;
 with Ada.Unchecked_Deallocation ; 
 
-package BODY P_Arbre is 
+package body P_Arbre is 
 
 
     -- Instantiation des fonctions et procédures :
@@ -11,7 +11,7 @@ package BODY P_Arbre is
 
     procedure Afficher_Ustring (Element : in Unbounded_String) is
     begin
-        Put_Line(To_String(Element));
+        Put_Line (To_String (Element));
     end Afficher_Ustring;
 
     procedure Afficher is new P_Liste_Ustring.Pour_Chaque(Traiter => Afficher_Ustring);
@@ -19,8 +19,8 @@ package BODY P_Arbre is
 
     -- Définition des fonctions et procédures :
 
-    Function Decoupage (F_Chaine : in String ; F_Cible : in Character) return P_liste_ustring.T_liste_chainee is
-        Premier : Unbounded_String;
+    function Decoupage (F_Chaine : in String ; F_Cible : in Character) return P_Liste_Ustring.T_Liste_Chainee is
+        Element : Unbounded_String;
         Precedent, Suivant : Integer := 0;
         Resultat : P_Liste_Ustring.T_Liste_Chainee ;
 
@@ -30,15 +30,27 @@ package BODY P_Arbre is
         for I in F_Chaine'Range loop
             if F_Chaine(I) = F_Cible then
                 Suivant := I;
-                Premier := To_Unbounded_String ((F_Chaine (Precedent + 1 .. Suivant - 1)));
-                Inserer_En_Tete (Resultat, Premier);
-                Put_Line (To_String (Premier));
+                Element := To_Unbounded_String ((F_Chaine (Precedent + 1 .. Suivant - 1)));
+                Inserer_En_Tete (Resultat, Element);
                 Precedent := Suivant;
             end if;
         end loop;
+        
         return Resultat;
 
     end Decoupage;
+
+
+    procedure Test_Decoupage (F_Chaine : in String ; F_Cible : in Character) is
+        Ma_Liste : P_Liste_Ustring.T_Liste_Chainee ;
+
+    begin
+        Ma_Liste := Decoupage(F_Chaine, F_Cible); 
+        Afficher (Ma_Liste);
+    end Test_Decoupage;
+
+
+
 
 
 end P_Arbre ;
