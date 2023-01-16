@@ -1,19 +1,24 @@
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with P_Liste_gen;
 
-PACKAGE arbre IS
+package P_Arbre is
 
-    C_Max_nom : constant Integer := 50; --Taille maximale d'un nom de fichier/dossier
+    C_Max_Nom : constant Integer := 50; --Taille maximale d'un nom de fichier/dossier
     
-    TYPE T_fichier;
-    TYPE T_tab_perm is array(1..10) of Character;
 
-    TYPE T_arbre is ACCESS T_fichier; -- Pointeur sur fichier ou dossier
-    TYPE T_fichier is 
+    package P_Liste_Ustring is new P_Liste_Gen(Type_Element => Unbounded_String); use P_liste_Ustring;
+
+
+    type T_Fichier;
+    type T_Tab_Perm is array(1..10) of Character;
+
+    type T_Arbre is ACCESS T_fichier; -- Pointeur sur fichier ou dossier
+    type T_Fichier is 
         RECORD
 
-            Nom : String(1..C_Max_nom); -- Nom du fichier/dossier
+            Nom : String(1..C_Max_Nom); -- Nom du fichier/dossier
             Taille : Integer;           -- Taille du fichier/dossier
-            Permission : T_tab_perm;    -- Permissions du fichier/dossier
+            Permission : T_Tab_Perm;    -- Permissions du fichier/dossier
 
             Parent : T_arbre;   -- Pointeur sur le parent
             Frere : T_arbre;    -- Pointeur sur un frère
@@ -30,7 +35,7 @@ PACKAGE arbre IS
     -- post-condtion : nouveau T_fichier ajouté à l'arbre
     -- exception : aucune
 
- --   Procedure ajout( arbre : in out T_arbre); 
+ --   Procedure Ajouter( arbre : in out T_arbre); 
     -- Sémantique : 
     -- Paramètres : arbre : in out type T_arbre
     -- Pré-condition : aucune
@@ -38,7 +43,7 @@ PACKAGE arbre IS
     -- exception : aucune
 
 
-    Procedure decoupage(P_chaine : in string);
+    Function Decoupage( P_chaine : in string) return P_liste_ustring.T_liste_chainee;
 
 
 --    Procedure recheche();
@@ -46,4 +51,4 @@ PACKAGE arbre IS
 --    Procedure modifier();
 
 
-END arbre;
+end P_Arbre;

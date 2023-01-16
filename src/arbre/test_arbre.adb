@@ -1,9 +1,9 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
-with arbre; use arbre;
+with P_Arbre; use P_Arbre;
 
-procedure test_arbre is
+procedure Test_Arbre is
     -- Déclaration de types
     
 
@@ -11,12 +11,11 @@ procedure test_arbre is
     
     
     -- Déclaration de variables
-    mon_arbre : T_arbre;
-    test : string := "root/machin/truc/bidule";
+    Mon_Arbre : T_Arbre;
+    Test : String := "bin/sbin/src/build";
 
 
 begin
-    decoupage(test);
+    null;
 
-
-end test_arbre; 
+end Test_Arbre; 
