@@ -1,49 +1,29 @@
 WITH Ada.Integer_Text_IO, Ada.Text_IO ;
 USE Ada.Integer_Text_IO, Ada.Text_IO ;
 with Ada.Unchecked_Deallocation ; 
+with Ada.Strings.Unbounded;
 
 PACKAGE BODY arbre IS
 
     Procedure free is new Ada.Unchecked_Deallocation(T_fichier, T_arbre) ;
 
-    Function creation(F_chemin, F_nom : in String ; est_dossier : in boolean) return T_arbre is 
 
-        nouv_arbre : T_arbre := null;
+    Procedure decoupage( P_chaine : in string) is
+        premier : unbounded_string;
+        precedent, suivant : Integer := 0;
+
     begin
+        precedent := P_chaine'First - 1;
+        for i in P_chaine'range loop
+            if P_chaine(i) = '/' then
+                suivant := i;
+                premier := To_Unbounded_string((P_chaine( precedent + 1..suivant-1 )));
+                put_line(To_string(premier));
+                precedent := suivant;
+            end if;
+        end loop;
 
-
-
-        nouv_arbre := new T_fichier(nom, taille, perm;
-
-        nouv_arbre.all.parent := null;
-        nouv_arbre.all.fils := null;
-        nouv_arbre.all.frere := null;
-        nouv_arbre.all.nom(1) := '/';
-        nouv_arbre.all.taille := 10240;
-        nouv_arbre.all.permission := "drwxr-xr-x";
-
-
-
-        return nouv_arbre;
-
-    end creation;
-
-
-    Function existe(F_dossier : in String ; arbre : in out T_arbre) return boolean is
-    begin
-
-        if arbre.all.nom = F_dossier then
-            return true;
-        elsif arbre.all.frere /= null then
-            return existe(F_dossier, arbre.all.frere);
-        else 
-            return false;
-    end existe; 
-
-    Procedure ajout(arbre : in out T_arbre) is
-    begin
-        null;
-    end ajout;
+    end decoupage;
 
 
 END arbre ;

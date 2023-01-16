@@ -22,7 +22,7 @@ PACKAGE arbre IS
 
         END RECORD;
 
-    Function creation(F_nom : in String ; est_dossier : in boolean) return T_arbre;
+--    Function creation(F_nom : in String ; est_dossier : in boolean) return T_arbre;
     -- Sémantique: Créer un nouveau fichier ou dossier 
     -- Paramètres : aucun
     -- type-retour : T_arbre
@@ -30,12 +30,15 @@ PACKAGE arbre IS
     -- post-condtion : nouveau T_fichier ajouté à l'arbre
     -- exception : aucune
 
-    Procedure ajout( arbre : in out T_arbre); 
+ --   Procedure ajout( arbre : in out T_arbre); 
     -- Sémantique : 
     -- Paramètres : arbre : in out type T_arbre
     -- Pré-condition : aucune
     -- Post-condition : 
     -- exception : aucune
+
+
+    Procedure decoupage(P_chaine : in string);
 
 
 --    Procedure recheche();
