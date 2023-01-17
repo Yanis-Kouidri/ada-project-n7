@@ -20,6 +20,7 @@ procedure Test_Arbre is
 begin
     Test_Decoupage(Test2, '/');
     Ajouter(Mon_Arbre, Nom_Dos, True, null); 
+    Ajouter(Mon_Arbre.all.Fils, Nom_Dos, True, Mon_Arbre); 
 
 
 end Test_Arbre; 

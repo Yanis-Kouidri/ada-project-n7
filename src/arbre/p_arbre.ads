@@ -28,20 +28,8 @@ package P_Arbre is
     -- Définition des exceptions :
     Null_Ptr_Exception : exception;
 
---    Function creation(F_nom : in String ; est_dossier : in boolean) return T_Arbre;
-    -- Sémantique: Créer un nouveau fichier ou dossier 
-    -- Paramètres : aucun
-    -- type-retour : T_Arbre
-    -- pré-condition : aucune
-    -- post-condtion : nouveau T_fichier ajouté à l'Arbre
-    -- exception : aucune
 
- --   Procedure Ajouter( Arbre : in out T_Arbre); 
-    -- Sémantique : 
-    -- Paramètres : Arbre : in out type T_Arbre
-    -- Pré-condition : aucune
-    -- Post-condition : 
-    -- exception : aucune
+    -- Déclaration des fonction et Procédure :
 
 --------------------------------------------------
     -- Decoupage
@@ -91,6 +79,10 @@ package P_Arbre is
 --------------------------------------------------
     procedure Ajouter (F_Endroit : in out T_Arbre ; F_Nom : in String ; F_Est_Dossier : in Boolean ; F_Parent : in T_Arbre);
     
+    
+--------------------------------------------------
+    -- Fonction de test et débbugage :
+--------------------------------------------------
     procedure Test_Decoupage (F_Chaine : in String ; F_Cible : in Character);
 
 --    Procedure recheche();
