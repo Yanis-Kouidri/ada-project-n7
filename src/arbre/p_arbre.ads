@@ -79,6 +79,9 @@ package P_Arbre is
 --------------------------------------------------
     procedure Ajouter (F_Endroit : in out T_Arbre ; F_Nom : in String ; F_Est_Dossier : in Boolean ; F_Parent : in T_Arbre);
     
+    procedure Afficher_dos (F_Endroit : in T_Arbre);
+
+    procedure Ajouter_Dans_Dos (F_Endroit : in out T_Arbre ; F_Nom : in String ; F_Est_Dossier : in Boolean ; F_Parent : in T_Arbre);
     
 --------------------------------------------------
     -- Fonction de test et débbugage :

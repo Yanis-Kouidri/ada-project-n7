@@ -84,6 +84,33 @@ package body P_Arbre is
 
     end Ajouter;
 ----------------------------------------------------------------------
+    
+
+----------------------------------------------------------------------
+    procedure Afficher_dos (F_Endroit : in T_Arbre) is
+    begin
+        Put_Line(To_String(F_Endroit.all.Nom));
+        if F_Endroit.all.Frere /= null then
+            Afficher_dos (F_Endroit.all.Frere);
+        else
+            new_line;
+        end if;
+
+    end Afficher_dos;
+----------------------------------------------------------------------
+
+
+----------------------------------------------------------------------
+    procedure Ajouter_Dans_Dos (F_Endroit : in out T_Arbre ; F_Nom : in String ; F_Est_Dossier : in Boolean ; F_Parent : in T_Arbre) is
+    begin
+        if F_Endroit.all.Frere /= null then
+            Ajouter_Dans_Dos (F_Endroit.all.Frere, F_Nom, F_Est_Dossier, F_Parent);
+        else
+            ajouter(F_Endroit, F_Nom, F_Est_Dossier, F_Parent);
+        end if;
+
+    end Ajouter_Dans_Dos;
+----------------------------------------------------------------------
         
 
 end P_Arbre ;
