@@ -1,49 +1,51 @@
 generic
-    type Type_element is private;
+    type Type_Element is private;
     
-PACKAGE P_liste_gen IS
+package P_Liste_Gen is 
 
     -- Déclaration des types :
-    Type T_cellule is limited private;
-    Type T_liste_chainee is private;
+    type T_Cellule is limited private;
+    type T_Liste_Chainee is private;
 
     -- Définiton des procédures et fonctions :
 
-    function creer_liste_vide return T_liste_chainee; 
+    function Creer_Liste_Vide return T_Liste_Chainee; 
 
-    function est_vide(list: in T_liste_chainee) return boolean;
+    function Est_vide (List: in T_Liste_Chainee) return Boolean;
 
-    procedure inserer_en_tete(list : in out T_liste_chainee ; elem : in Type_element);
-
-    --procedure afficher(list : in T_liste_chainee);
+    procedure Inserer_En_Tete (List : in out T_Liste_Chainee ; Elem : in Type_Element);
     
-    function rechercher(list : in T_liste_chainee ; elem : in Type_element) return T_liste_chainee;
+    procedure Inserer_En_Queue (List : in out T_Liste_Chainee ; Elem : in Type_Element);
 
-    procedure inserer_apres(list : in T_liste_chainee; data, new_data : in Type_element);
+    --procedure afficher (List : in T_Liste_Chainee);
+    
+    function Rechercher (List : in T_Liste_Chainee ; Elem : in Type_Element) return T_Liste_Chainee;
 
-    procedure inserer_avant(list : in out T_liste_chainee; data, new_data : in Type_element);
+    procedure Inserer_Apres (List : in T_Liste_Chainee; Data, New_Data : in Type_Element);
 
-    procedure enlever(list : in out T_liste_chainee; a_enlever : in Type_element);
+    procedure Inserer_Avant (List : in out T_Liste_Chainee; Data, New_Data : in Type_Element);
+
+    procedure Enlever (List : in out T_Liste_Chainee; a_enlever : in Type_Element);
 
     generic
-        with procedure traiter (element : in Type_element);
-    procedure pour_chaque (list : in T_liste_chainee);
+        with procedure Traiter (Element : in Type_Element);
+    procedure Pour_Chaque (List : in T_Liste_Chainee);
 
     generic
-        with procedure traiter (element : in Type_element);
-    procedure pour_un (list : in T_liste_chainee);
+        with procedure Traiter (Element : in Type_Element);
+    procedure Pour_Un (List : in T_Liste_Chainee);
     
 
 
 private
     -- Définition des types :
-    Type T_liste_chainee is access T_cellule; -- Une liste chainée (pointeur sur cellule)
+    type T_Liste_Chainee is access T_Cellule; -- Une Liste chainée  (pointeur sur cellule)
 
-    Type T_cellule is
-        Record
-            Element : Type_element;
-            Suivant : T_liste_chainee;
-        End Record;
+    type T_Cellule is
+        record
+            Element : Type_Element;
+            Suivant : T_Liste_Chainee;
+        end record;
 
 
-END P_liste_gen; 
+end P_Liste_Gen; 

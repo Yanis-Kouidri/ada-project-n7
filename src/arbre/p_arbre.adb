@@ -7,9 +7,9 @@ package body P_Arbre is
 
     -- Instantiation des fonctions et procédures :
 
-    procedure Free is new Ada.Unchecked_Deallocation(T_Fichier, T_Arbre) ;
+    procedure Free is new Ada.Unchecked_Deallocation(T_Fichier, T_Arbre) ; -- Pour libérer de la mémoire
 
-    procedure Afficher_Ustring (Element : in Unbounded_String) is
+    procedure Afficher_Ustring (Element : in Unbounded_String) is -- Pour afficher un liste de unbounded string
     begin
         Put_Line (To_String (Element));
     end Afficher_Ustring;
@@ -17,30 +17,34 @@ package body P_Arbre is
     procedure Afficher is new P_Liste_Ustring.Pour_Chaque(Traiter => Afficher_Ustring);
 
 
+
     -- Définition des fonctions et procédures :
 
+----------------------------------------------------------------------
     function Decoupage (F_Chaine : in String ; F_Cible : in Character) return P_Liste_Ustring.T_Liste_Chainee is
-        Element : Unbounded_String;
-        Precedent, Suivant : Integer := 0;
-        Resultat : P_Liste_Ustring.T_Liste_Chainee ;
+        Element : Unbounded_String; -- Chaque élément de la chaine à découpé
+        Debut, Fin : Integer := 0; -- Debut et fin des éléments à découpé
+        Resultat : P_Liste_Ustring.T_Liste_Chainee ; -- Pointeur sur T_Cellule d'une liste chainée d'unbounded string
 
     begin
-        Precedent := F_Chaine'First - 1;
+        Debut := F_Chaine'First - 1;
         Resultat := Creer_Liste_Vide;
         for I in F_Chaine'Range loop
             if F_Chaine(I) = F_Cible then
-                Suivant := I;
-                Element := To_Unbounded_String ((F_Chaine (Precedent + 1 .. Suivant - 1)));
-                Inserer_En_Tete (Resultat, Element);
-                Precedent := Suivant;
+                Fin := I;
+                Element := To_Unbounded_String ((F_Chaine (Debut + 1 .. Fin - 1)));
+                Inserer_En_Queue (Resultat, Element);
+                Debut := Fin;
             end if;
         end loop;
         
         return Resultat;
 
     end Decoupage;
+----------------------------------------------------------------------
 
 
+----------------------------------------------------------------------
     procedure Test_Decoupage (F_Chaine : in String ; F_Cible : in Character) is
         Ma_Liste : P_Liste_Ustring.T_Liste_Chainee ;
 
@@ -48,9 +52,38 @@ package body P_Arbre is
         Ma_Liste := Decoupage(F_Chaine, F_Cible); 
         Afficher (Ma_Liste);
     end Test_Decoupage;
+----------------------------------------------------------------------
 
 
+----------------------------------------------------------------------
+    function Existe (F_Chemin : in P_Liste_Ustring.T_Liste_Chainee ; F_Entree : in T_Arbre) return Boolean is
+        Liste : P_Liste_Ustring.T_Liste_Chainee := F_Chemin;
+        Arbre : T_Arbre := F_Entree;
+        Verdict : Boolean := false; -- Est ce que le chemin existe ?
+    begin
+        -- TODO
+        return Verdict;
+    end Existe;
+----------------------------------------------------------------------
 
 
+----------------------------------------------------------------------
+    procedure Ajouter (F_Endroit : in out T_Arbre ; F_Nom : in String ; F_Est_Dossier : in Boolean ; F_Parent : in T_Arbre) is
+        Taille : Integer := 0;
+        Permission : T_Tab_Perm;
+    begin
+        if F_Est_Dossier then
+            Taille := 10240; -- 10 ko
+            Permission := "drwxr-xr-x";
+        else
+            Taille := 0;
+            Permission := "-rw-rw-r--";
+        end if;
+        F_Endroit := new T_Fichier'(To_Unbounded_String(F_Nom), Taille, Permission, F_Parent, null, null, Null_Unbounded_String); 
+
+
+    end Ajouter;
+----------------------------------------------------------------------
+        
 
 end P_Arbre ;

@@ -11,12 +11,15 @@ procedure Test_Arbre is
     
     
     -- Déclaration de variables
---    Mon_Arbre : T_Arbre;
+    Mon_Arbre : T_Arbre;
     Test : String := "bin/sbin/src/build/";
+    Test2 : String := "";
+    Nom_dos : String := "Racine";
 
 
 begin
-    Test_Decoupage(Test, '/');
+    Test_Decoupage(Test2, '/');
+    Ajouter(Mon_Arbre, Nom_Dos, True, null); 
 
 
 end Test_Arbre; 

@@ -2,134 +2,153 @@ with Ada.Text_IO; use Ada.Text_IO;
 --with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with Ada.Unchecked_Deallocation ;
 
-PACKAGE BODY P_liste_gen IS
+package body P_Liste_Gen is 
 
 
-    LISTE_VIDE_ERROR: EXCEPTION;
-    FIN_ERROR: EXCEPTION;
+    LISTE_VIDE_ERROR: exception;
+    FIN_ERROR: exception;
     -- Définiton des procédures et fonctions :
     
-    procedure free is new Ada.Unchecked_Deallocation(T_cellule, T_liste_chainee) ;  
+    procedure Free is new Ada.Unchecked_Deallocation(T_cellule, T_Liste_Chainee) ;  
 
-    function creer_liste_vide return T_liste_chainee is
+    function Creer_Liste_Vide return T_Liste_Chainee is
     begin
         return null;
-    end creer_liste_vide;
+    end Creer_Liste_Vide;
 
-    function est_vide(list: in T_liste_chainee) return boolean is
+    function Est_Vide (List: in T_Liste_Chainee) return Boolean is
     begin
-        return list = null;
-    end est_vide;
+        return List = null;
+    end Est_Vide;
 
 
-    procedure inserer_en_tete(list : in out T_liste_chainee ; elem : in Type_element) is
+    procedure Inserer_En_Tete (List : in out T_Liste_Chainee ; Elem : in Type_Element) is
 
-        temp : T_liste_chainee;
+        Temp : T_Liste_Chainee;
     begin
-        temp := list;
-        list := new T_cellule;
-        list.all.element := elem;
-        list.all.suivant := temp;
-    end inserer_en_tete;
+        Temp := List;
+        List := new T_Cellule;
+        List.all.Element := Elem;
+        List.all.Suivant := Temp;
+    end Inserer_En_Tete;
 
 
-    function rechercher(list : in T_liste_chainee ; elem : in Type_element) return T_liste_chainee is
+    procedure Inserer_En_Queue (List : in out T_Liste_Chainee ; Elem : in Type_Element) is
     begin
-        if list /= null then
-            if elem = list.all.element then
-                return list;
+        if List = null then
+            List := new T_Cellule;
+            List.all.Element := Elem;
+            List.all.Suivant := null;
+
+        elsif List.all.Suivant = null then
+            List.all.Suivant := new T_Cellule;
+            List.all.Suivant.all.Element := Elem;
+            List.all.Suivant.all.Suivant := null;
+
+        else
+            Inserer_En_Queue (List.all.Suivant, Elem);
+        end if;
+
+    end Inserer_En_Queue;
+
+
+    function Rechercher (List : in T_Liste_Chainee ; Elem : in Type_Element) return T_Liste_Chainee is
+    begin
+        if List /= null then
+            if Elem = List.all.Element then
+                return List;
             else
-                return rechercher(list.all.suivant, elem);
+                return Rechercher (List.all.Suivant, Elem);
             end if;
         else
             return null;
         end if;
-    end rechercher;
+    end Rechercher;
 
 
-    procedure inserer_apres(list : in T_liste_chainee; data, new_data : in Type_element) is
+    procedure Inserer_Apres(List : in T_Liste_Chainee; Data, New_Data : in Type_Element) is
     begin
-        if est_vide(list) then
+        if Est_Vide(List) then
             raise LISTE_VIDE_ERROR ;
         else
-            if list.all.element = data then
-                inserer_en_tete(list.all.suivant, new_data);
-            elsif est_vide(list.all.suivant) then
+            if List.all.Element = Data then
+                inserer_en_tete(List.all.Suivant, New_Data);
+            elsif Est_Vide(List.all.Suivant) then
                 raise FIN_ERROR;
             else
-                inserer_apres(list.all.suivant, data, new_data);
+                Inserer_Apres(List.all.Suivant, Data, New_Data);
             end if;
         end if;
     exception
-        when LISTE_VIDE_ERROR => put_line("Erreur : Liste vide.");
-        when FIN_ERROR => put_line("Erreur : Element non trouvé, insertion impossible.");
-    end inserer_apres; 
+        when LISTE_VIDE_ERROR => Put_Line("Erreur : Liste vide.");
+        when FIN_ERROR => Put_Line("Erreur : Element non trouvé, insertion impossible.");
+    end Inserer_Apres; 
 
 
-    procedure inserer_avant(list : in out T_liste_chainee; data, new_data : in Type_element) is
+    procedure Inserer_Avant(List : in out T_Liste_Chainee; Data, New_Data : in Type_Element) is
 
     begin
-        if est_vide(list) then
+        if Est_Vide(List) then
             raise LISTE_VIDE_ERROR ;
         else
-            if list.all.element = data then
-                inserer_en_tete(list, new_data);
-            elsif est_vide(list.all.suivant) then
+            if List.all.Element = Data then
+                inserer_en_tete(List, New_Data);
+            elsif Est_Vide(List.all.Suivant) then
                 raise FIN_ERROR;
             else
-                inserer_avant(list.all.suivant, data, new_data);
+                Inserer_Avant(List.all.Suivant, Data, New_Data);
             end if;
         end if;
     exception
-        when LISTE_VIDE_ERROR => put_line("Erreur : Liste vide.");
-        when FIN_ERROR => put_line("Erreur : Element non trouvé, insertion impossible.");
-    end inserer_avant; 
+        when LISTE_VIDE_ERROR => Put_Line("Erreur : Liste vide.");
+        when FIN_ERROR => Put_Line("Erreur : Element non trouvé, insertion impossible.");
+    end Inserer_Avant; 
 
 
-    procedure enlever(list : in out T_liste_chainee; a_enlever : in Type_element) is
-        tmp: T_liste_chainee; 
+    procedure Enlever(List : in out T_Liste_Chainee; A_Enlever : in Type_Element) is
+        Tmp: T_Liste_Chainee; 
 
     begin
-        if est_vide(list) then
+        if Est_Vide(List) then
             raise LISTE_VIDE_ERROR ;
         else
-            if list.all.element = a_enlever then
-                tmp := list;
-                list := list.all.suivant;
-                free(tmp);
-            elsif est_vide(list.all.suivant) then
+            if List.all.Element = A_Enlever then
+                Tmp := List;
+                List := List.all.Suivant;
+                Free(tmp);
+            elsif Est_Vide(List.all.Suivant) then
                 raise FIN_ERROR;
             else
-                enlever(list.all.suivant, a_enlever);
+                enlever(List.all.Suivant, A_Enlever);
             end if;
         end if;
     exception
-        when LISTE_VIDE_ERROR => put_line("Erreur : Liste vide.");
-        when FIN_ERROR => put_line("Erreur : Element non trouvé, suppression impossible.");
+        when LISTE_VIDE_ERROR => Put_Line("Erreur : Liste vide.");
+        when FIN_ERROR => Put_Line("Erreur : Element non trouvé, suppression impossible.");
     end enlever; 
 
 
-    procedure pour_chaque(list : in T_liste_chainee) is
+    procedure Pour_Chaque(List : in T_Liste_Chainee) is
     begin
-        if list /= null then
-            traiter(list.all.element);
-            pour_chaque(list.all.suivant);
+        if List /= null then
+            Traiter(List.all.Element);
+            Pour_Chaque(List.all.Suivant);
         else
-            new_line;
-            new_line;
+            New_Line;
+            New_Line;
         end if;
-    end pour_chaque;
+    end Pour_Chaque;
 
 
-    procedure pour_un(list : in T_liste_chainee) is
+    procedure Pour_Un(List : in T_Liste_Chainee) is
     begin
-        if list /= null then
-            traiter(list.all.element);
+        if List /= null then
+            Traiter(List.all.Element);
         else
-            new_line;
-            new_line;
+            New_Line;
+            New_Line;
         end if;
-    end pour_un;
+    end Pour_Un;
 
 
-END P_liste_gen; 
+end P_Liste_Gen; 

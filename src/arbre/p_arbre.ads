@@ -3,10 +3,8 @@ with P_Liste_gen;
 
 package P_Arbre is
 
-    C_Max_Nom : constant Integer := 50; --Taille maximale d'un nom de fichier/dossier
-    
 
-    package P_Liste_Ustring is new P_Liste_Gen(Type_Element => Unbounded_String); use P_liste_Ustring;
+    package P_Liste_Ustring is new P_Liste_Gen(Type_Element => Unbounded_String); use P_Liste_Ustring;
 
 
     type T_Fichier;
@@ -16,28 +14,31 @@ package P_Arbre is
     type T_Fichier is 
         RECORD
 
-            Nom : String(1..C_Max_Nom); -- Nom du fichier/dossier
+            Nom : Unbounded_String; -- Nom du fichier/dossier
             Taille : Integer;           -- Taille du fichier/dossier
             Permission : T_Tab_Perm;    -- Permissions du fichier/dossier
 
-            Parent : T_arbre;   -- Pointeur sur le parent
-            Frere : T_arbre;    -- Pointeur sur un frère
-            Fils : T_arbre;     -- Pointeur sur le fils
-            Contenu : Unbounded_string;
+            Parent : T_Arbre;   -- Pointeur sur le parent
+            Frere : T_Arbre;    -- Pointeur sur un frère
+            Fils : T_Arbre;     -- Pointeur sur le fils
+            Contenu : Unbounded_String;
 
         END RECORD;
 
---    Function creation(F_nom : in String ; est_dossier : in boolean) return T_arbre;
+    -- Définition des exceptions :
+    Null_Ptr_Exception : exception;
+
+--    Function creation(F_nom : in String ; est_dossier : in boolean) return T_Arbre;
     -- Sémantique: Créer un nouveau fichier ou dossier 
     -- Paramètres : aucun
-    -- type-retour : T_arbre
+    -- type-retour : T_Arbre
     -- pré-condition : aucune
-    -- post-condtion : nouveau T_fichier ajouté à l'arbre
+    -- post-condtion : nouveau T_fichier ajouté à l'Arbre
     -- exception : aucune
 
- --   Procedure Ajouter( arbre : in out T_arbre); 
+ --   Procedure Ajouter( Arbre : in out T_Arbre); 
     -- Sémantique : 
-    -- Paramètres : arbre : in out type T_arbre
+    -- Paramètres : Arbre : in out type T_Arbre
     -- Pré-condition : aucune
     -- Post-condition : 
     -- exception : aucune
@@ -45,11 +46,51 @@ package P_Arbre is
 --------------------------------------------------
     -- Decoupage
     --
-    -- Sémantique : Découper un chaine de caractère en fonction d'un caractère spécifique.
+    -- Sémantique : Découper un Chaine de caractère en fonction d'un caractère spécifique.
+    --
+    -- Paramètres : 
+    --      F_Chaine : Entrée String ; Chaine de caractères à découper.
+    --      F_Cible : Entrée Character ; Caractère qui va définir le découpage de la liste.
+    --
+    -- Retour :
+    --      Type : P_Liste_Ustring.T_Liste_Chainee ; Liste chainée de unbounded string, chaque T_Cellule de la liste chainée contient un mot découpé de F_Chaine.
 --------------------------------------------------
+    function Decoupage (F_Chaine : in String ; F_Cible : in Character) return P_Liste_Ustring.T_Liste_Chainee;
 
-    function Decoupage (F_chaine : in String ; F_cible : in Character) return P_liste_ustring.T_liste_chainee;
+--------------------------------------------------
+    -- Existe
+    --
+    -- Sémantique : Vérifie si un chemin existe dans l'Arbre en fonction d'un point d'entrée dans l'Arbre et d'une liste chainéé
+    --
+    -- Paramètres : 
+    --      F_Chemin : Entrée P_Liste_Ustring.T_Liste_Chainee ; Liste chainée indiquant le chemin a tester
+    --      F_Entree : Entrée T_Arbre ; Point d'entrée dans l'Arbre où le chemin sera tester.
+    --
+    -- Retour :
+    --      Type : Boolean ; vrai si le chemin existe, faux sinon
+--------------------------------------------------
+    function Existe (F_Chemin : in P_Liste_Ustring.T_Liste_Chainee ; F_Entree : in T_Arbre) return Boolean;
 
+--------------------------------------------------
+    -- Ajouter
+    --
+    -- Sémantique : Ajoute un dossier ou un fichier à l'arbre. 
+    --
+    -- Paramètres : 
+    --      F_Endroit : Entrée Pointeur sur T_Arbre , Là où l'on souhaite ajouter un dossier/fichier à l'arbre
+    --      F_Nom : Nom du nouveau fichier/dossier.
+    --      F_Est_Dossier : Entrée Booléen ; Défini s'il s'agit d'un dossier où d'un fichier.
+    --      F_Parent : Entrée Pointeur sur T_Arbre ; Parent du fichier/dossier. Null si racine
+    --
+    -- Retour :
+    --      Type : Booléen ; vrai si le chemin existe, faux sinon
+    --
+    -- Préconditions :
+    --      F_Endroit = null;
+    --      F_Nom non vide;
+--------------------------------------------------
+    procedure Ajouter (F_Endroit : in out T_Arbre ; F_Nom : in String ; F_Est_Dossier : in Boolean ; F_Parent : in T_Arbre);
+    
     procedure Test_Decoupage (F_Chaine : in String ; F_Cible : in Character);
 
 --    Procedure recheche();

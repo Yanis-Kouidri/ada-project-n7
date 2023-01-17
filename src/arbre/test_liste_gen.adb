@@ -2,141 +2,146 @@ with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with P_liste_gen;
 
-procedure test_liste_gen is
+procedure Test_Liste_Gen is
 
     -- Instantiation des packages :
-    Package P_liste_entier is new P_liste_gen(Type_element => Integer); use P_liste_entier;
-    Package P_liste_char is new P_liste_gen(Type_element => Character); use P_liste_char;
+    Package P_liste_entier is new P_liste_gen(Type_Element => Integer); use P_liste_entier;
+    Package P_liste_char is new P_liste_gen(Type_Element => Character); use P_liste_char;
 
     -- Déclaration de types
     
 
     -- Déclaration de procédures et fonctions
 
-    procedure afficher_char (element : in character) is
+    procedure Afficher_Char (Element : in character) is
     begin
-        put(element);
-    end afficher_char;
+        put(Element);
+    end Afficher_Char;
 
-    procedure afficher_entier(element : in Integer) is
+    procedure Afficher_entier(Element : in Integer) is
     begin
-        put(element);
-    end afficher_entier;
+        put(Element);
+    end Afficher_entier;
 
     -- Instantiation des procedures génériques :
-    procedure afficher is new p_liste_entier.pour_chaque(traiter => afficher_entier);
-    procedure afficher is new p_liste_char.pour_chaque(traiter => afficher_char);
+    procedure Afficher is new p_liste_entier.pour_chaque(traiter => Afficher_entier);
+    procedure Afficher is new p_liste_char.pour_chaque(traiter => Afficher_char);
 
-    procedure afficher_un is new p_liste_entier.pour_un(traiter => afficher_entier);
-    procedure afficher_un is new p_liste_char.pour_un(traiter => afficher_char);
+    procedure Afficher_un is new p_liste_entier.pour_un(traiter => Afficher_entier);
+    procedure Afficher_un is new p_liste_char.pour_un(traiter => Afficher_char);
     
     
     -- Déclaration de variables
-    ma_liste_entier, cible : P_liste_entier.T_liste_chainee;
-    ma_liste_char, cible_char : P_liste_char.T_liste_chainee;
+    Ma_Liste_Entier, cible : P_liste_entier.T_liste_chainee;
+    Ma_Liste_Char, cible_char : P_liste_char.T_liste_chainee;
 
 begin
-    put_line("Bienvenue dans le programme de test du paquetage list_chainee");
-    put_line("list_chainee implémante une liste chainée d'éléménts de type générique avec diverses opérations définies dans le fichier source");
-    new_line;
-    put_line("  ------------------");
-    put_line(" Test liste d'entier : ");
-    put_line("  ------------------");
+    Put_Line("Bienvenue dans le programme de test du paquetage list_chainee");
+    Put_Line("list_chainee implémante une liste chainée d'éléménts de type générique avec diverses opérations définies dans le fichier source");
+    New_Line;
+    Put_Line("  ------------------");
+    Put_Line(" Test liste d'entier : ");
+    Put_Line("  ------------------");
     
 
-    new_line;
-    put_line("[Création d'une liste vide]");
-    ma_liste_entier := creer_liste_vide;
+    New_Line;
+    Put_Line("[Création d'une liste vide]");
+    Ma_Liste_Entier := Creer_Liste_Vide;
 
-    new_line;
-    put_line("Test de la fonction est_vide");
+    New_Line;
+    Put_Line("Test de la fonction Est_Vide");
 
-    if est_vide(ma_liste_entier) then
-        put_line("La liste est vide : Réussite");
+    if Est_Vide(Ma_Liste_Entier) then
+        Put_Line("La liste est vide : Réussite");
     else
-        put_line("Erreur");
+        Put_Line("Erreur");
     end if;
-    new_line;
+    New_Line;
 
-    put_line("[Test de la procedure inserer_en_tete avec la valeur 111]");
-    inserer_en_tete(ma_liste_entier, 111);
-    put_line("Résultat :");
-    afficher(ma_liste_entier);
+    Put_Line ("[Test de la procedure Inserer_En_Queue avec la valeur 111 puis 114]");
+    Inserer_En_Queue (Ma_Liste_Entier, 111);
+    Inserer_En_Queue (Ma_Liste_Entier, 114);
+    Put_Line ("Résultat :");
+    Afficher (Ma_Liste_Entier);
 
-    put_line("[Test des procedures inserer_avant et inserer_apres avec la valeur 17]");
-    inserer_avant(ma_liste_entier, 111, 17);
-    inserer_apres(ma_liste_entier, 111, 17);
-    put_line("Résultat :");
-    afficher(ma_liste_entier);
-
-
-    put_line("[Ajout de valeurs dans la liste]");
-    inserer_en_tete(ma_liste_entier, 4);
-    inserer_en_tete(ma_liste_entier, 94);
-    inserer_en_tete(ma_liste_entier, 6);
-    inserer_en_tete(ma_liste_entier, 29);
-    afficher(ma_liste_entier);
-
-    put_line("[Recherche de la valeur 6]");
-    cible := rechercher(ma_liste_entier, 6);
-    put_line("Element trouvé :");
-    afficher_un(cible);
-    new_line;
-
-    put_line("[Suppression de l'élément 111]");
-    enlever(ma_liste_entier, 111);
-    put_line("Résultat :");
-    afficher(ma_liste_entier);
-
-    new_line;
+    Put_Line ("[Test des procedures Inserer_Avant et Inserer_Apres avec la valeur 17]");
+    Inserer_Avant (Ma_Liste_Entier, 111, 17);
+    Inserer_Apres (Ma_Liste_Entier, 111, 17);
+    Put_Line ("Résultat :");
+    Afficher(Ma_Liste_Entier);
 
 
-    put_line("  ------------------");
-    put_line(" Test liste de caractères : ");
-    put_line("  ------------------");
+    Put_Line ("[Ajout de valeurs dans la liste]");
+    Inserer_En_Tete (Ma_Liste_Entier, 4);
+    Inserer_En_Tete(Ma_Liste_Entier, 94);
+    Inserer_En_Tete(Ma_Liste_Entier, 6);
+    Inserer_En_Tete(Ma_Liste_Entier, 29);
+    Afficher(Ma_Liste_Entier);
+
+    Put_Line("[Ajout de valeurs au bout de la liste]");
+    Inserer_En_Queue(Ma_Liste_Entier, 999);
+    Afficher(Ma_Liste_Entier);
+
+    Put_Line("[Recherche de la valeur 6]");
+    cible := rechercher(Ma_Liste_Entier, 6);
+    Put_Line("Element trouvé :");
+    Afficher_un(cible);
+    New_Line;
+
+    Put_Line("[Suppression de l'élément 111]");
+    enlever(Ma_Liste_Entier, 111);
+    Put_Line("Résultat :");
+    Afficher(Ma_Liste_Entier);
+
+    New_Line;
 
 
-    new_line;
-    put_line("[Création d'une liste vide]");
-    ma_liste_char := creer_liste_vide;
+    Put_Line("  ------------------");
+    Put_Line(" Test liste de caractères : ");
+    Put_Line("  ------------------");
 
-    new_line;
-    put_line("Test de la fonction est_vide");
-    if est_vide(ma_liste_char) then
-        put_line("La liste est vide : Réussite");
+
+    New_Line;
+    Put_Line("[Création d'une liste vide]");
+    Ma_Liste_Char := Creer_Liste_Vide;
+
+    New_Line;
+    Put_Line("Test de la fonction Est_Vide");
+    if Est_Vide(Ma_Liste_Char) then
+        Put_Line("La liste est vide : Réussite");
     else
-        put_line("Erreur");
+        Put_Line("Erreur");
     end if;
-    new_line;
+    New_Line;
 
-    put_line("[Test de la procedure inserer_en_tete avec le caracter 'c']");
-    inserer_en_tete(ma_liste_char, 'c');
-    put_line("Résultat :");
-    afficher(ma_liste_char);
+    Put_Line("[Test de la procedure Inserer_En_Tete avec le caracter 'c']");
+    Inserer_En_Tete(Ma_Liste_Char, 'c');
+    Put_Line("Résultat :");
+    Afficher(Ma_Liste_Char);
 
-    put_line("[Test des procedures inserer_avant et inserer_apres avec le caractère 'P']");
-    inserer_avant(ma_liste_char, 'c', 'P');
-    inserer_apres(ma_liste_char, 'c', 'P');
-    put_line("Résultat :");
-    afficher(ma_liste_char);
+    Put_Line("[Test des procedures Inserer_Avant et Inserer_Apres avec le caractère 'P']");
+    Inserer_Avant(Ma_Liste_Char, 'c', 'P');
+    Inserer_Apres(Ma_Liste_Char, 'c', 'P');
+    Put_Line("Résultat :");
+    Afficher(Ma_Liste_Char);
 
 
-    put_line("[Ajout de valeurs dans la liste]");
-    inserer_en_tete(ma_liste_char, 'y');
-    inserer_en_tete(ma_liste_char, 'a');
-    inserer_en_tete(ma_liste_char, 'n');
-    inserer_en_tete(ma_liste_char, 'i');
-    afficher(ma_liste_char);
+    Put_Line("[Ajout de valeurs dans la liste]");
+    Inserer_En_Tete(Ma_Liste_Char, 'y');
+    Inserer_En_Tete(Ma_Liste_Char, 'a');
+    Inserer_En_Tete(Ma_Liste_Char, 'n');
+    Inserer_En_Tete(Ma_Liste_Char, 'i');
+    Afficher(Ma_Liste_Char);
 
-    put_line("[Recherche du caractère 'n']");
-    cible_char := rechercher(ma_liste_char, 'n');
-    put_line("Element trouvé :");
-    afficher_un(cible_char);
-    new_line;
+    Put_Line("[Recherche du caractère 'n']");
+    cible_char := rechercher(Ma_Liste_Char, 'n');
+    Put_Line("Element trouvé :");
+    Afficher_un(cible_char);
+    New_Line;
 
-    put_line("[Suppression du caractère 'c' ]");
-    enlever(ma_liste_char, 'c');
-    put_line("Résultat :");
-    afficher(ma_liste_char);
+    Put_Line("[Suppression du caractère 'c' ]");
+    enlever(Ma_Liste_Char, 'c');
+    Put_Line("Résultat :");
+    Afficher(Ma_Liste_Char);
 
-end test_liste_gen; 
+end Test_Liste_Gen; 
