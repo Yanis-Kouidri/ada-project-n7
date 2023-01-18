@@ -11,20 +11,26 @@ procedure Test_Arbre is
     
     
     -- Déclaration de variables
-    Mon_Arbre : T_Arbre;
+    Mon_Arbre, racine : T_Arbre;
     Test : String := "bin/sbin/src/build/";
     Test2 : String := "";
-    Nom_dos : String := "Racine";
+    Nom_dos : String := "/";
 
 
 begin
-    Test_Decoupage(Test2, '/');
-    Ajouter(Mon_Arbre, Nom_Dos, True, null); 
-    Ajouter_Dans_Dos (Mon_Arbre.all.Fils, "fils1", True, Mon_Arbre); 
-    Ajouter_Dans_Dos (Mon_Arbre.all.Fils, "Fils_2", True, Mon_Arbre); 
-    Ajouter_Dans_Dos (Mon_Arbre.all.Fils, "Fils_3", True, Mon_Arbre); 
+    --Test_Decoupage(Test2, '/');
+    Ajouter(Mon_Arbre, "/", True, null); 
+    Afficher_un(Mon_Arbre);
 
-    Afficher_dos(Mon_Arbre.all.Fils);
+    Ajouter_Dans_Dos (Mon_Arbre, "fils_1", True); 
+
+    Ajouter_Dans_Dos (Mon_Arbre, "fils_2", True); 
+
+    Ajouter_Dans_Dos (Mon_Arbre, "fils_3", True); 
+
+    Afficher_dos(Mon_Arbre);
+
+--    Afficher_dos(Racine.all.Fils);
 
 
 end Test_Arbre; 
