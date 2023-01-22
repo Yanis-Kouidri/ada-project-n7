@@ -45,6 +45,7 @@ package P_Arbre is
 --------------------------------------------------
     function Decoupage (F_Chaine : in String ; F_Cible : in Character) return P_Liste_Ustring.T_Liste_Chainee;
 
+
 --------------------------------------------------
     -- Existe
     --
@@ -58,6 +59,7 @@ package P_Arbre is
     --      Type : Boolean ; vrai si le chemin existe, faux sinon
 --------------------------------------------------
     function Existe (F_Chemin : in P_Liste_Ustring.T_Liste_Chainee ; F_Entree : in T_Arbre) return Boolean;
+
 
 --------------------------------------------------
     -- Ajouter
@@ -79,16 +81,76 @@ package P_Arbre is
 --------------------------------------------------
     procedure Ajouter (F_Endroit : in out T_Arbre ; F_Nom : in String ; F_Est_Dossier : in Boolean ; F_Parent : in T_Arbre);
     
+
+--------------------------------------------------
+    -- Afficher_Un
+    --
+    -- Sémantique : Affiche le nom du dossier/fichier passer en paramètre
+    --
+    -- Paramètres :
+    --      F_Endroit : Entrée T_Arbre ; Pointeur sur T_Fichier à afficher.
+    --
+    -- Préconditions :
+    --      F_Endroit /= null
+    --      F_Endroit.all.Nom initialisé
+--------------------------------------------------
     procedure Afficher_Un (F_Endroit : in T_Arbre); 
 
+--------------------------------------------------
+    -- Afficher_dos
+    --
+    -- Sémantique : Afficher le contenu d'un dossier passer en paramètre.
+    --      Par contenu j'entends le nom de l'ensemble des dossier/fichier que contient le dossier.
+    --
+    -- Paramètres :
+    --      F_Parent : Entrée T_Arbre ; Pointeur sur T_Fichier à afficher.
+    --
+    -- Préconditions : 
+    --      F_Parent =/ null
+    --      F_Parent.all.Fils /= null
+--------------------------------------------------
     procedure Afficher_dos (F_Parent : in T_Arbre);
 
+
+--------------------------------------------------
+    -- Ajouter_Dans_Dos
+    --
+    -- Sémantique : Ajoute un fichier/dossier dans un dossier passé en paramètre
+    --
+    -- Paramètres :
+    --      F_Parent : Entrée T_Arbre ; Dossier parent dans lequel ajouter un nouveau T_Arbre
+    --      F_Nom : Entrée String ; Nom du nouveau fichier/dossier
+    --      F_Est_Dossier : Entrée booléen ; nature du fichier/dossier à ajouter
+    --
+    -- Préconditions :
+    --      F_Parent est un dossier.
+    --      F_Nom non vide
+--------------------------------------------------
     procedure Ajouter_Dans_Dos (F_Parent : in T_Arbre ; F_Nom : in String ; F_Est_Dossier : in Boolean );
-    
-    procedure Afficher_Frere (F_Frere: in T_Arbre);
+
     
 --------------------------------------------------
+    -- Afficher_Frere
+    --
+    -- Sémantique : Affiche tous les frères d'un fichier/dossier
+    --
+    -- Paramètre :
+    --      F_Frere : Entrée T_Arbre ; Premier des frères à afficher
+    --
+    -- Préconditions :
+    --      Aucune
+--------------------------------------------------
+    procedure Afficher_Frere (F_Frere: in T_Arbre);
+    
+
+--------------------------------------------------
     -- Fonction de test et débbugage :
+--------------------------------------------------
+
+--------------------------------------------------
+    -- Test_Decoupage
+    --
+    -- Sémantique : Affiche le résultat de la fonction découpage
 --------------------------------------------------
     procedure Test_Decoupage (F_Chaine : in String ; F_Cible : in Character);
 

@@ -12,9 +12,14 @@ procedure main_sgf is
     
     
     -- Déclaration de variables
+    Racine : T_Arbre;
 
 
 begin
-    null;
+    Ajouter(Racine, "/", True, null);
+
+    Ajouter_Dans_Dos (Racine, "test_1", True);
+
+    P_ls(Racine);
 
 end main_sgf; 

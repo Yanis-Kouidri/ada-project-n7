@@ -20,7 +20,7 @@ procedure Test_Arbre is
 begin
     --Test_Decoupage(Test2, '/');
     Ajouter(Mon_Arbre, "/", True, null); 
-    Afficher_un(Mon_Arbre);
+--    Afficher_un(Mon_Arbre);
 
     Ajouter_Dans_Dos (Mon_Arbre, "fils_1", True); 
 

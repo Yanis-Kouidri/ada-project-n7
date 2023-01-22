@@ -1,4 +1,6 @@
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with P_Arbre; use P_Arbre;
+
 
 package P_Commande is
 
@@ -10,18 +12,19 @@ package P_Commande is
     -- Déclaration des fonction et Procédure :
 
 --------------------------------------------------
-    -- 
+    -- P_ls 
     --
-    -- Sémantique : 
+    -- Sémantique : Affiche le contenu du dossier passé en paramètre 
+    --              ou le contenu de répertoire courant si rien n'est passé en paramètre.
     --
     -- Paramètres : 
-    --      F_
+    --      F_Dossier : Entrée T_Arbre ; Dossier à afficher
     --      F_
     --
     -- Retour :
     --      Type : 
 --------------------------------------------------
-    procedure ls;
+    procedure P_ls (F_Dossier : in T_Arbre);
 
 --------------------------------------------------
     -- Existe
