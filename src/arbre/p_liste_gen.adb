@@ -9,6 +9,7 @@ package body P_Liste_Gen is
     FIN_ERROR: exception;
     -- Définiton des procédures et fonctions :
     
+------------------------------------------------------------------------------------------
     procedure Free is new Ada.Unchecked_Deallocation(T_cellule, T_Liste_Chainee) ;  
 
     function Creer_Liste_Vide return T_Liste_Chainee is
@@ -20,8 +21,10 @@ package body P_Liste_Gen is
     begin
         return List = null;
     end Est_Vide;
+------------------------------------------------------------------------------------------
 
 
+------------------------------------------------------------------------------------------
     procedure Inserer_En_Tete (List : in out T_Liste_Chainee ; Elem : in Type_Element) is
 
         Temp : T_Liste_Chainee;
@@ -31,8 +34,10 @@ package body P_Liste_Gen is
         List.all.Element := Elem;
         List.all.Suivant := Temp;
     end Inserer_En_Tete;
+------------------------------------------------------------------------------------------
 
 
+------------------------------------------------------------------------------------------
     procedure Inserer_En_Queue (List : in out T_Liste_Chainee ; Elem : in Type_Element) is
     begin
         if List = null then
@@ -50,8 +55,10 @@ package body P_Liste_Gen is
         end if;
 
     end Inserer_En_Queue;
+------------------------------------------------------------------------------------------
 
 
+------------------------------------------------------------------------------------------
     function Rechercher (List : in T_Liste_Chainee ; Elem : in Type_Element) return T_Liste_Chainee is
     begin
         if List /= null then
@@ -64,8 +71,10 @@ package body P_Liste_Gen is
             return null;
         end if;
     end Rechercher;
+------------------------------------------------------------------------------------------
 
 
+------------------------------------------------------------------------------------------
     procedure Inserer_Apres(List : in T_Liste_Chainee; Data, New_Data : in Type_Element) is
     begin
         if Est_Vide(List) then
@@ -83,8 +92,10 @@ package body P_Liste_Gen is
         when LISTE_VIDE_ERROR => Put_Line("Erreur : Liste vide.");
         when FIN_ERROR => Put_Line("Erreur : Element non trouvé, insertion impossible.");
     end Inserer_Apres; 
+------------------------------------------------------------------------------------------
 
 
+------------------------------------------------------------------------------------------
     procedure Inserer_Avant(List : in out T_Liste_Chainee; Data, New_Data : in Type_Element) is
 
     begin
@@ -103,8 +114,10 @@ package body P_Liste_Gen is
         when LISTE_VIDE_ERROR => Put_Line("Erreur : Liste vide.");
         when FIN_ERROR => Put_Line("Erreur : Element non trouvé, insertion impossible.");
     end Inserer_Avant; 
+------------------------------------------------------------------------------------------
 
 
+------------------------------------------------------------------------------------------
     procedure Enlever(List : in out T_Liste_Chainee; A_Enlever : in Type_Element) is
         Tmp: T_Liste_Chainee; 
 
@@ -126,8 +139,22 @@ package body P_Liste_Gen is
         when LISTE_VIDE_ERROR => Put_Line("Erreur : Liste vide.");
         when FIN_ERROR => Put_Line("Erreur : Element non trouvé, suppression impossible.");
     end enlever; 
+------------------------------------------------------------------------------------------
+ 
+
+------------------------------------------------------------------------------------------
+    function Recuperer (List: in T_Liste_Chainee) return Type_Element is
+    begin
+        if List /= null then
+            return List.all.Element;
+        else
+            raise Liste_Vide_Error;
+        end if;
+    end Recuperer;
+------------------------------------------------------------------------------------------
 
 
+------------------------------------------------------------------------------------------
     procedure Pour_Chaque(List : in T_Liste_Chainee) is
     begin
         if List /= null then
@@ -138,8 +165,10 @@ package body P_Liste_Gen is
             New_Line;
         end if;
     end Pour_Chaque;
+------------------------------------------------------------------------------------------
 
 
+------------------------------------------------------------------------------------------
     procedure Pour_Un(List : in T_Liste_Chainee) is
     begin
         if List /= null then
@@ -149,6 +178,7 @@ package body P_Liste_Gen is
             New_Line;
         end if;
     end Pour_Un;
+------------------------------------------------------------------------------------------
 
 
 end P_Liste_Gen; 

@@ -47,6 +47,21 @@ package P_Arbre is
 
 
 --------------------------------------------------
+    -- Recup_Commande
+    --
+    -- Sémantique : A partir d'une commande complète, renvoie uniquement le premier mot
+    --              Ex : A partir de "ls -l -r -a" renvoie : "ls".
+    --
+    -- Paramètres : 
+    --      F_Chaine : Entrée String ; Chaine de caractères à découper.
+    --
+    -- Retour :
+    --      Type : String ; Premier mot de la chaine de caractère passée en paramètre.
+--------------------------------------------------
+    function Recup_Commande (F_Chaine : in String) return String;
+
+
+--------------------------------------------------
     -- Existe
     --
     -- Sémantique : Vérifie si un chemin existe dans l'Arbre en fonction d'un point d'entrée dans l'Arbre et d'une liste chainéé

@@ -22,17 +22,20 @@ package body P_Arbre is
 
 ----------------------------------------------------------------------
     function Decoupage (F_Chaine : in String ; F_Cible : in Character) return P_Liste_Ustring.T_Liste_Chainee is
+        -- Copie de la chaine de caractère passée en paramètre + ajout du caractère de découpage pour être sur de tout récupérer
+        Commande : String := F_Chaine & F_Cible; 
         Element : Unbounded_String; -- Chaque élément de la chaine à découpé
         Debut, Fin : Integer := 0; -- Debut et fin des éléments à découpé
         Resultat : P_Liste_Ustring.T_Liste_Chainee ; -- Pointeur sur T_Cellule d'une liste chainée d'unbounded string
 
     begin
-        Debut := F_Chaine'First - 1;
+        
+        Debut := Commande'First - 1;
         Resultat := Creer_Liste_Vide;
-        for I in F_Chaine'Range loop
-            if F_Chaine(I) = F_Cible then
+        for I in Commande'Range loop
+            if Commande(I) = F_Cible then
                 Fin := I;
-                Element := To_Unbounded_String ((F_Chaine (Debut + 1 .. Fin - 1)));
+                Element := To_Unbounded_String ((Commande (Debut + 1 .. Fin - 1)));
                 Inserer_En_Queue (Resultat, Element);
                 Debut := Fin;
             end if;
@@ -52,6 +55,20 @@ package body P_Arbre is
         Ma_Liste := Decoupage(F_Chaine, F_Cible); 
         Afficher (Ma_Liste);
     end Test_Decoupage;
+----------------------------------------------------------------------
+
+----------------------------------------------------------------------
+    function Recup_Commande (F_Chaine : in String) return String is
+        decoup : P_Liste_Ustring.T_Liste_Chainee ; -- Pointeur sur T_Cellule d'une liste chainée d'unbounded string
+        commande : Unbounded_String;
+
+    begin
+        decoup := Decoupage (F_Chaine, ' ');
+        commande := Recuperer(decoup);
+
+
+        return To_String(commande);
+    end Recup_Commande;
 ----------------------------------------------------------------------
 
 

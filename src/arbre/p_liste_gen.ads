@@ -27,6 +27,8 @@ package P_Liste_Gen is
 
     procedure Enlever (List : in out T_Liste_Chainee; a_enlever : in Type_Element);
 
+    function Recuperer (List: in T_Liste_Chainee) return Type_Element;
+
     generic
         with procedure Traiter (Element : in Type_Element);
     procedure Pour_Chaque (List : in T_Liste_Chainee);
@@ -46,6 +48,7 @@ private
             Element : Type_Element;
             Suivant : T_Liste_Chainee;
         end record;
+    List_Vide_Error : exception;
 
 
 end P_Liste_Gen; 
