@@ -45,6 +45,15 @@ package body P_Commande is
 
 
 ----------------------------------------------------------------------
+    procedure P_Touch (F_Dest : in T_Arbre ; F_Nom : in String) is
+    begin
+        if F_Dest /= null then
+            Ajouter_Dans_Dos (F_Dest, F_Nom, False);
+
+        else
+            Put_Line("Lieu de création introuvable");
+        end if;
+    end P_Touch;
 ----------------------------------------------------------------------
 
 
