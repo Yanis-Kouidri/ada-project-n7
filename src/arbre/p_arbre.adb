@@ -57,6 +57,7 @@ package body P_Arbre is
     end Test_Decoupage;
 ----------------------------------------------------------------------
 
+
 ----------------------------------------------------------------------
     function Recup_Commande (F_Chaine : in String) return String is
         decoup : P_Liste_Ustring.T_Liste_Chainee ; -- Pointeur sur T_Cellule d'une liste chainée d'unbounded string
@@ -74,11 +75,11 @@ package body P_Arbre is
 
 ----------------------------------------------------------------------
     function Recup_Arg (F_Chaine : in String ; F_Arg_nb : in Integer) return String is
-        decoup : P_Liste_Ustring.T_Liste_Chainee ; -- Pointeur sur T_Cellule d'une liste chainée d'unbounded string
+        Decoup : P_Liste_Ustring.T_Liste_Chainee ; -- Pointeur sur T_Cellule d'une liste chainée d'unbounded string
         Arg : Unbounded_String;
     begin
-        decoup := Decoupage (F_Chaine, ' ');
-        Arg := Recuperer_nb(decoup, F_Arg_Nb);
+        Decoup := Decoupage (F_Chaine, ' ');
+        Arg := Recuperer_Nb(decoup, F_Arg_Nb);
 
         return To_String(Arg);
 
@@ -88,13 +89,39 @@ package body P_Arbre is
 
 ----------------------------------------------------------------------
     function Existe (F_Chemin : in P_Liste_Ustring.T_Liste_Chainee ; F_Entree : in T_Arbre) return Boolean is
+
         Liste : P_Liste_Ustring.T_Liste_Chainee := F_Chemin;
-        Arbre : T_Arbre := F_Entree;
+        Arbre : T_Arbre := F_Entree; -- Le pointeur qui va aller jusqu'à la destination
         Verdict : Boolean := false; -- Est ce que le chemin existe ?
+
+        --A_Trouver : S
     begin
-        -- TODO
+        if Existe_Fils (Arbre, To_String (Recuperer (Liste))) then
+           null; 
+            -- Existe (Liste.all.Suivant, 
+        end if;
+
+
         return Verdict;
     end Existe;
+----------------------------------------------------------------------
+
+----------------------------------------------------------------------
+    function Existe_fils (F_Fils : in T_Arbre ; F_Nom_Fils : in String) return Boolean is
+    begin
+        if F_Fils /= null then
+            if To_String(F_Fils.all.Nom) = F_Nom_Fils then
+                return true;
+            else
+                return Existe_Fils(F_Fils.all.Frere , F_Nom_Fils);
+            end if;
+
+        else
+            return false;
+        end if;
+
+
+    end Existe_fils;
 ----------------------------------------------------------------------
 
 
@@ -173,5 +200,52 @@ package body P_Arbre is
     end Ajouter_Dans_Dos;
 ----------------------------------------------------------------------
         
+
+----------------------------------------------------------------------
+    function Est_Dossier (F_Elem : in T_Arbre) return boolean is
+    begin
+        return F_Elem.all.Permission(1) = 'd';
+
+    end Est_Dossier;
+----------------------------------------------------------------------
+
+
+----------------------------------------------------------------------
+    procedure Descendre ( F_Courant : in out T_Arbre ; F_fils : in String) is
+        -- Il faut vérifier que c'est bien un dossier
+    begin
+        if Existe_Fils ( F_Courant.all.fils, F_Fils) then
+            F_Courant := F_Courant.all.fils;
+
+            while F_Courant.all.Nom /= F_fils loop
+                F_Courant := F_Courant.all.Frere;
+            end loop;
+        else
+            Put_Line("Le dossier ne contient pas cet élément");
+        end if;
+
+    end Descendre;
+    
+----------------------------------------------------------------------
+
+
+----------------------------------------------------------------------
+    
+----------------------------------------------------------------------
+
+
+----------------------------------------------------------------------
+    
+----------------------------------------------------------------------
+
+
+----------------------------------------------------------------------
+    
+----------------------------------------------------------------------
+
+
+----------------------------------------------------------------------
+    
+----------------------------------------------------------------------
 
 end P_Arbre ;

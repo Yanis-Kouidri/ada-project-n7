@@ -12,28 +12,28 @@ package P_Commande is
     -- Déclaration des fonction et Procédure :
 
 --------------------------------------------------
-    -- P_ls 
+    -- P_Ls 
     --
     -- Sémantique : Affiche le contenu du dossier passé en paramètre 
     --              ou le contenu de répertoire courant si rien n'est passé en paramètre.
     --
-    -- Paramètres : 
-    --      F_Dossier : Entrée T_Arbre ; Dossier à afficher
+    -- Paramètre : 
+    --      P_Dossier : Entrée T_Arbre ; Dossier à afficher
     --
 --------------------------------------------------
-    procedure P_Ls (F_Dossier : in T_Arbre);
+    procedure P_Ls (P_Dossier : in T_Arbre);
 
 --------------------------------------------------
-    -- P_mkdir
+    -- P_Mkdir
     --
     -- Sémantique : Crée un dossier 
     --
     -- Paramètres : 
-    --      F_Dest : Entrée T_Arbre ; Dossier dans lequel créer le nouveau dossier
-    --      F_Nom : Entrée Sting ; Nom du nouveau dossier.
+    --      P_Dest : Entrée T_Arbre ; Dossier dans lequel créer le nouveau dossier
+    --      P_Nom : Entrée Sting ; Nom du nouveau dossier.
     --
 --------------------------------------------------
-    procedure P_Mkdir (F_Dest : in T_Arbre ; F_Nom : in String);
+    procedure P_Mkdir (P_Dest : in T_Arbre ; P_Nom : in String);
     
     
 --------------------------------------------------
@@ -42,11 +42,23 @@ package P_Commande is
     -- Sémantique : Crée un fichier 
     --
     -- Paramètres : 
-    --      F_Dest : Entrée T_Arbre ; Dossier dans lequel créer le nouveau fichier
-    --      F_Nom : Entrée Sting ; Nom du nouveau fichier.
+    --      P_Dest : Entrée T_Arbre ; Dossier dans lequel créer le nouveau fichier
+    --      P_Nom : Entrée Sting ; Nom du nouveau fichier.
     --
 --------------------------------------------------
-    procedure P_Touch (F_Dest : in T_Arbre ; F_Nom : in String);
+    procedure P_Touch (P_Dest : in T_Arbre ; P_Nom : in String);
+
+--------------------------------------------------
+    -- P_Cd
+    --
+    -- Sémantique : Change de répertoire
+    --
+    -- Paramètres : 
+    --      P_Dest : Entrée T_Arbre ; Dossier dans lequel je me déplace.
+    --      P_Courant : Entrée Sortie T_Arbre ; Nouveau répertoire courant.
+    --
+--------------------------------------------------
+    procedure P_Cd (P_Dest : in T_Arbre ; P_Courant : in out T_Arbre );
 
 --------------------------------------------------
     -- Fonction de test et débbugage :

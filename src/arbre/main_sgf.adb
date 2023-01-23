@@ -9,7 +9,7 @@ procedure main_sgf is
 
 
     -- Déclaration de types
-    type T_Commandes is (ls, quit, mkdir, touch);
+    type T_Commandes is (ls, cd, quit, mkdir, touch);
     
 
     -- Déclaration de procédures et fonctions
@@ -17,57 +17,62 @@ procedure main_sgf is
     
     -- Déclaration de variables
     Racine, Rep_Courant : T_Arbre;
-    Commande_brute : Unbounded_String;
-    Commande_traitee : P_Arbre.P_Liste_Ustring.T_Liste_Chainee ; 
-    Commande_simple : Unbounded_String;
+    Commande_Brute : Unbounded_String;
+    Commande_Traitee : P_Arbre.P_Liste_Ustring.T_Liste_Chainee ; 
+    Commande_Simple : Unbounded_String;
     Quitter : Boolean := False;
 
 
 begin
     -- Initialisation de l'arbre
     Ajouter(Racine, "/", True, null);
+    Rep_Courant := Racine;
 
     -- Ajout d'un dossier
-    Ajouter_Dans_Dos (Racine, "test_1", True);
+    --Ajouter_Dans_Dos (Racine, "test_1", True);
+    --Descendre (Rep_Courant, "test_1");
 
 
---    Commande_traitee := Decoupage(To_String(Commande_brute), ' ');
---    Test_Decoupage (To_String (Commande_brute), ' ');
+--    Commande_Traitee := Decoupage(To_String(Commande_Brute), ' ');
+--    Test_Decoupage (To_String (Commande_Brute), ' ');
     
 
---    Put_Line(To_String(Commande_simple));
+--    Put_Line(To_String(Commande_Simple));
     
-    while not quitter loop
+    while not Quitter loop
+        
+        Put("ykouidri@ada-project: / > "); -- Le prompt
 
-    -- Récupération de la commande tapée par l'utilisateur :
-    Commande_brute := To_Unbounded_String(get_line);
+        -- Récupération de la commande tapée par l'utilisateur :
+        Commande_Brute := To_Unbounded_String(get_line);
 
-    -- Récupération du premier mot de la commande tapée par l'utilisateur :
-    Commande_simple := To_Unbounded_String(Recup_Commande (To_String (Commande_brute)));
+        -- Récupération du premier mot de la commande tapée par l'utilisateur :
+        Commande_Simple := To_Unbounded_String(Recup_Commande (To_String (Commande_Brute)));
 
         begin    
-            case T_Commandes'Value(To_String(Commande_simple)) is 
+            case T_Commandes'Value(To_String(Commande_Simple)) is 
 
-                when ls => P_ls(Racine);
+                when ls => P_ls(Rep_Courant);
 
                 when mkdir => 
                     -- put_line("Nom :");
                     -- put_line (Recup_Arg (To_String (Commande_Brute), 1));
                     
-                    P_Mkdir (Racine, Recup_Arg (To_String (Commande_Brute), 1));
+                    P_Mkdir (Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1));
 
-                when touch => P_Touch (Racine, Recup_Arg (To_String (Commande_Brute), 1));
+                when touch => P_Touch (Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1));
+
+                when cd => Descendre (Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1));
 
                 when quit => Quitter := true;
 
             end case;
+
         exception 
             when Constraint_Error => Put_Line("Commande inconnue");
         end;
+
     end loop;
     
-
-
-
 
 end main_sgf; 

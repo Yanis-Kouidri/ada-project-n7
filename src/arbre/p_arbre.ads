@@ -10,9 +10,9 @@ package P_Arbre is
     type T_Fichier;
     type T_Tab_Perm is array(1..10) of Character;
 
-    type T_Arbre is ACCESS T_Fichier; -- Pointeur sur fichier ou dossier
+    type T_Arbre is access T_Fichier; -- Pointeur sur fichier ou dossier
     type T_Fichier is 
-        RECORD
+        record
 
             Nom : Unbounded_String; -- Nom du fichier/dossier
             Taille : Integer;           -- Taille du fichier/dossier
@@ -23,7 +23,7 @@ package P_Arbre is
             Fils : T_Arbre;     -- Pointeur sur le fils
             Contenu : Unbounded_String;
 
-        END RECORD;
+        end record;
 
     -- Définition des exceptions :
     Null_Ptr_Exception : exception;
@@ -93,12 +93,28 @@ package P_Arbre is
 
 
 --------------------------------------------------
+    -- Existe_fils
+    --
+    -- Sémantique : Cherche dans un dossier si un fils existe en fonction de son nom.
+    --              Ex : est ce que le dossier toto contient le fichier/dossier titi.
+    --
+    -- Paramètres : 
+    --      F_Fils : Entrée T_Arbre ; Dossier à fouiller
+    --      F_Entree : Entrée String ; nom à recherche dans le dossier
+    --
+    -- Retour :
+    --      Type : Boolean ; vrai si le nom existe, faux sinon
+--------------------------------------------------
+    function Existe_fils (F_Fils : in T_Arbre ; F_Nom_Fils : in String) return Boolean;
+
+
+--------------------------------------------------
     -- Ajouter
     --
     -- Sémantique : Ajoute un dossier ou un fichier à l'arbre. 
     --
     -- Paramètres : 
-    --      F_Endroit : Entrée Pointeur sur T_Arbre , Là où l'on souhaite ajouter un dossier/fichier à l'arbre
+    --      F_endroit : Entrée Pointeur sur T_Arbre , Là où l'on souhaite ajouter un dossier/fichier à l'arbre
     --      F_Nom : Nom du nouveau fichier/dossier.
     --      F_Est_Dossier : Entrée Booléen ; Défini s'il s'agit d'un dossier où d'un fichier.
     --      F_Parent : Entrée Pointeur sur T_Arbre ; Parent du fichier/dossier. Null si racine
@@ -107,10 +123,10 @@ package P_Arbre is
     --      Type : Booléen ; vrai si le chemin existe, faux sinon
     --
     -- Préconditions :
-    --      F_Endroit = null;
+    --      F_endroit = null;
     --      F_Nom non vide;
 --------------------------------------------------
-    procedure Ajouter (F_Endroit : in out T_Arbre ; F_Nom : in String ; F_Est_Dossier : in Boolean ; F_Parent : in T_Arbre);
+    procedure Ajouter (F_endroit : in out T_Arbre ; F_Nom : in String ; F_Est_Dossier : in Boolean ; F_Parent : in T_Arbre);
     
 
 --------------------------------------------------
@@ -119,13 +135,13 @@ package P_Arbre is
     -- Sémantique : Affiche le nom du dossier/fichier passer en paramètre
     --
     -- Paramètres :
-    --      F_Endroit : Entrée T_Arbre ; Pointeur sur T_Fichier à afficher.
+    --      F_endroit : Entrée T_Arbre ; Pointeur sur T_Fichier à afficher.
     --
     -- Préconditions :
-    --      F_Endroit /= null
-    --      F_Endroit.all.Nom initialisé
+    --      F_endroit /= null
+    --      F_endroit.all.Nom initialisé
 --------------------------------------------------
-    procedure Afficher_Un (F_Endroit : in T_Arbre); 
+    procedure Afficher_Un (F_endroit : in T_Arbre); 
 
 --------------------------------------------------
     -- Afficher_dos
@@ -174,6 +190,24 @@ package P_Arbre is
     procedure Afficher_Frere (F_Frere: in T_Arbre);
     
 
+--------------------------------------------------
+    -- Est_Dossier
+    --
+    -- Sémantique : Indique si un élément de l'arbre est un dossier ou non
+    --              Si ce n'est pas un dossier c'est donc un fichier. 
+    --
+    -- Paramètre :
+    --      F_Elem : Entrée T_Arbre ; élément de l'arbre à déterminer
+    --
+    -- Retour :
+    --      Type : booléen ; Vrai si c'est un dossier, faux si c'est un fichier
+--------------------------------------------------
+    function Est_Dossier (F_Elem : in T_Arbre) return boolean;
+
+    
+    procedure Descendre ( F_Courant : in out T_Arbre ; F_fils : in String);
+
+    
 --------------------------------------------------
     -- Fonction de test et débbugage :
 --------------------------------------------------

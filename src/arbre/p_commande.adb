@@ -14,11 +14,11 @@ package body P_Commande is
     -- Définition des fonctions et procédures :
 
 ----------------------------------------------------------------------
-    procedure P_ls (F_Dossier : in T_Arbre) is
+    procedure P_Ls (P_Dossier : in T_Arbre) is
     begin
-        if F_Dossier /= null then
-            if F_Dossier.all.fils /= null then
-                Afficher_dos(F_Dossier);
+        if P_Dossier /= null then
+            if P_Dossier.all.fils /= null then
+                Afficher_dos(P_Dossier);
             else
                 Put_Line("Dossier vide");
             end if;
@@ -31,10 +31,10 @@ package body P_Commande is
 
 
 ----------------------------------------------------------------------
-    procedure P_mkdir (F_Dest : in T_Arbre ; F_Nom : in String) is
+    procedure P_Mkdir (P_Dest : in T_Arbre ; P_Nom : in String) is
     begin
-        if F_Dest /= null then
-            Ajouter_Dans_Dos (F_Dest, F_Nom, True);
+        if P_Dest /= null then
+            Ajouter_Dans_Dos (P_Dest, P_Nom, True);
 
         else
             Put_Line("Lieu de création introuvable");
@@ -45,10 +45,10 @@ package body P_Commande is
 
 
 ----------------------------------------------------------------------
-    procedure P_Touch (F_Dest : in T_Arbre ; F_Nom : in String) is
+    procedure P_Touch (P_Dest : in T_Arbre ; P_Nom : in String) is
     begin
-        if F_Dest /= null then
-            Ajouter_Dans_Dos (F_Dest, F_Nom, False);
+        if P_Dest /= null then
+            Ajouter_Dans_Dos (P_Dest, P_Nom, False);
 
         else
             Put_Line("Lieu de création introuvable");
@@ -58,6 +58,14 @@ package body P_Commande is
 
 
 ----------------------------------------------------------------------
+    procedure P_Cd (P_Dest : in T_Arbre ; P_Courant : in out T_Arbre ) is 
+    begin
+        if P_Dest /= null then
+            P_Courant := P_Dest;
+        end if;
+
+
+    end P_Cd;
 ----------------------------------------------------------------------
         
 
