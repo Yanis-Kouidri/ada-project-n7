@@ -9,6 +9,7 @@ procedure main_sgf is
 
 
     -- Déclaration de types
+    type T_Commandes is (ls, quit);
     
 
     -- Déclaration de procédures et fonctions
@@ -19,24 +20,43 @@ procedure main_sgf is
     Commande_brute : Unbounded_String;
     Commande_traitee : P_Arbre.P_Liste_Ustring.T_Liste_Chainee ; 
     Commande_simple : Unbounded_String;
+    Quitter : Boolean := False;
 
 
 begin
+    -- Initialisation de l'arbre
     Ajouter(Racine, "/", True, null);
 
+    -- Ajout d'un dossier
     Ajouter_Dans_Dos (Racine, "test_1", True);
 
-    Commande_brute := To_Unbounded_String(get_line);
-    Commande_traitee := Decoupage(To_String(Commande_brute), ' ');
+
+--    Commande_traitee := Decoupage(To_String(Commande_brute), ' ');
 --    Test_Decoupage (To_String (Commande_brute), ' ');
     
-    --    Je récupère la commande tapée par l'utilisateur :
+
+--    Put_Line(To_String(Commande_simple));
+    
+    while not quitter loop
+
+    -- Récupération de la commande tapée par l'utilisateur :
+    Commande_brute := To_Unbounded_String(get_line);
+
+    -- Récupération du premier mot de la commande tapée par l'utilisateur :
     Commande_simple := To_Unbounded_String(Recup_Commande (To_String (Commande_brute)));
-    Put_Line(To_String(Commande_simple));
+
+        begin    
+            case T_Commandes'Value(To_String(Commande_simple)) is 
+                when ls => P_ls(Racine);
+                when quit => Quitter := true;
+            end case;
+        exception 
+            when Constraint_Error => Put_Line("Commande inconnue");
+        end;
+    end loop;
     
 
 
 
-    P_ls(Racine);
 
 end main_sgf; 
