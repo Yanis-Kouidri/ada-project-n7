@@ -153,6 +153,21 @@ package body P_Liste_Gen is
     end Recuperer;
 ------------------------------------------------------------------------------------------
 
+------------------------------------------------------------------------------------------
+    function Recuperer_nb (List: in T_Liste_Chainee ; F_Nb : in Integer) return Type_Element is
+    begin
+        if List /= null then
+            if F_Nb > 0 then
+                return Recuperer_Nb (List.all.Suivant, F_Nb - 1);
+            else
+                return Recuperer(List);
+            end if;
+        else
+            raise Liste_Vide_Error;
+        end if;
+
+    end Recuperer_Nb;
+------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------
     procedure Pour_Chaque(List : in T_Liste_Chainee) is

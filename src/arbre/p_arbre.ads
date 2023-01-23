@@ -46,7 +46,7 @@ package P_Arbre is
     function Decoupage (F_Chaine : in String ; F_Cible : in Character) return P_Liste_Ustring.T_Liste_Chainee;
 
 
---------------------------------------------------
+-------------------------------------------------
     -- Recup_Commande
     --
     -- Sémantique : A partir d'une commande complète, renvoie uniquement le premier mot
@@ -60,6 +60,22 @@ package P_Arbre is
 --------------------------------------------------
     function Recup_Commande (F_Chaine : in String) return String;
 
+
+-------------------------------------------------
+    -- Recup_Arg
+    --
+    -- Sémantique : A partir d'une commande complète, renvoie uniquement l'argument numéro F_Arg_nb
+    --              Ex : A partir de "ls -l -r -a" et 2 renvoie : "-r".
+    --              Ex : A partir de "ls -l -r -a" et 1 renvoie : "-l".
+    --
+    -- Paramètres : 
+    --      F_Chaine : Entrée String ; Chaine de caractères à découper.
+    --      F_Arg_Nb : Entrée Entier ; Numéro de l'argument à récupérer.
+    --
+    -- Retour :
+    --      Type : String ; Argument demandé
+--------------------------------------------------
+    function Recup_Arg (F_Chaine : in String ; F_Arg_nb : in Integer) return String;
 
 --------------------------------------------------
     -- Existe

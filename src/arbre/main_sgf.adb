@@ -9,7 +9,7 @@ procedure main_sgf is
 
 
     -- Déclaration de types
-    type T_Commandes is (ls, quit);
+    type T_Commandes is (ls, quit, mkdir);
     
 
     -- Déclaration de procédures et fonctions
@@ -48,6 +48,11 @@ begin
         begin    
             case T_Commandes'Value(To_String(Commande_simple)) is 
                 when ls => P_ls(Racine);
+                when mkdir => 
+                    -- put_line("Nom :");
+                    -- put_line (Recup_Arg (To_String (Commande_Brute), 1));
+                    
+                    Ajouter_Dans_Dos (Racine, Recup_Arg (To_String (Commande_Brute), 1), true);
                 when quit => Quitter := true;
             end case;
         exception 

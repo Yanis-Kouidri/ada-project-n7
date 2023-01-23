@@ -73,6 +73,20 @@ package body P_Arbre is
 
 
 ----------------------------------------------------------------------
+    function Recup_Arg (F_Chaine : in String ; F_Arg_nb : in Integer) return String is
+        decoup : P_Liste_Ustring.T_Liste_Chainee ; -- Pointeur sur T_Cellule d'une liste chainée d'unbounded string
+        Arg : Unbounded_String;
+    begin
+        decoup := Decoupage (F_Chaine, ' ');
+        Arg := Recuperer_nb(decoup, F_Arg_Nb);
+
+        return To_String(Arg);
+
+    end Recup_Arg;
+
+----------------------------------------------------------------------
+
+----------------------------------------------------------------------
     function Existe (F_Chemin : in P_Liste_Ustring.T_Liste_Chainee ; F_Entree : in T_Arbre) return Boolean is
         Liste : P_Liste_Ustring.T_Liste_Chainee := F_Chemin;
         Arbre : T_Arbre := F_Entree;

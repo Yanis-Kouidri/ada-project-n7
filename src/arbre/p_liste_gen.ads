@@ -28,6 +28,8 @@ package P_Liste_Gen is
     procedure Enlever (List : in out T_Liste_Chainee; a_enlever : in Type_Element);
 
     function Recuperer (List: in T_Liste_Chainee) return Type_Element;
+    
+    function Recuperer_nb (List: in T_Liste_Chainee ; F_Nb : in Integer) return Type_Element;
 
     generic
         with procedure Traiter (Element : in Type_Element);

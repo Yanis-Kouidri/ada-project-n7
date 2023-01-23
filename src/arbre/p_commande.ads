@@ -24,18 +24,16 @@ package P_Commande is
     procedure P_ls (F_Dossier : in T_Arbre);
 
 --------------------------------------------------
-    -- Existe
+    -- P_mkdir
     --
-    -- Sémantique : 
+    -- Sémantique : Crée un dossier 
     --
     -- Paramètres : 
-    --      F_
-    --      F_
+    --      F_Dest : Entrée T_Arbre ; Dossier dans lequel créer le nouveau dossier
+    --      F_Nom : Entrée Sting ; Nom du nouveau dossier.
     --
-    -- Retour :
-    --      Type : 
 --------------------------------------------------
-    procedure P_mkdir (F_Dossier : in T_Arbre);
+    procedure P_mkdir (F_Dest : in T_Arbre ; F_Nom : in String);
     
     
 --------------------------------------------------
