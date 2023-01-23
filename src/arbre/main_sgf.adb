@@ -16,7 +16,7 @@ procedure main_sgf is
     
     
     -- Déclaration de variables
-    Racine : T_Arbre;
+    Racine, Rep_Courant : T_Arbre;
     Commande_brute : Unbounded_String;
     Commande_traitee : P_Arbre.P_Liste_Ustring.T_Liste_Chainee ; 
     Commande_simple : Unbounded_String;

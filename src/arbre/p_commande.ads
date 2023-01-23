@@ -19,10 +19,7 @@ package P_Commande is
     --
     -- Paramètres : 
     --      F_Dossier : Entrée T_Arbre ; Dossier à afficher
-    --      F_
     --
-    -- Retour :
-    --      Type : 
 --------------------------------------------------
     procedure P_ls (F_Dossier : in T_Arbre);
 
@@ -38,6 +35,7 @@ package P_Commande is
     -- Retour :
     --      Type : 
 --------------------------------------------------
+    procedure P_mkdir (F_Dossier : in T_Arbre);
     
     
 --------------------------------------------------
