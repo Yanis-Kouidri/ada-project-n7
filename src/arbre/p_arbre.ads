@@ -4,7 +4,8 @@ with P_Liste_gen;
 package P_Arbre is
 
 
-    package P_Liste_Ustring is new P_Liste_Gen(Type_Element => Unbounded_String); use P_Liste_Ustring;
+    package P_Liste_Ustring is new P_Liste_Gen(Type_Element => Unbounded_String); 
+    use P_Liste_Ustring;
 
 
     type T_Fichier;
@@ -207,6 +208,7 @@ package P_Arbre is
     
     function Descendre (F_Courant : in T_Arbre ; F_fils : in String) return T_Arbre;
 
+    function Monter (F_Courant : in T_Arbre) return T_Arbre;
     
 --------------------------------------------------
     -- Fonction de test et débbugage :

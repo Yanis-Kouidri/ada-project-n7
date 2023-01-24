@@ -4,9 +4,6 @@ with Ada.Unchecked_Deallocation ;
 
 package body P_Liste_Gen is 
 
-
-    LISTE_VIDE_ERROR: exception;
-    FIN_ERROR: exception;
     -- Définiton des procédures et fonctions :
     
 ------------------------------------------------------------------------------------------
@@ -78,19 +75,19 @@ package body P_Liste_Gen is
     procedure Inserer_Apres(List : in T_Liste_Chainee; Data, New_Data : in Type_Element) is
     begin
         if Est_Vide(List) then
-            raise LISTE_VIDE_ERROR ;
+            raise Liste_Vide_Erreur ;
         else
             if List.all.Element = Data then
                 inserer_en_tete(List.all.Suivant, New_Data);
             elsif Est_Vide(List.all.Suivant) then
-                raise FIN_ERROR;
+                raise Fin_Erreur;
             else
                 Inserer_Apres(List.all.Suivant, Data, New_Data);
             end if;
         end if;
     exception
-        when LISTE_VIDE_ERROR => Put_Line("Erreur : Liste vide.");
-        when FIN_ERROR => Put_Line("Erreur : Element non trouvé, insertion impossible.");
+        when Liste_Vide_Erreur => Put_Line("Erreur : Liste vide.");
+        when Fin_Erreur => Put_Line("Erreur : Element non trouvé, insertion impossible.");
     end Inserer_Apres; 
 ------------------------------------------------------------------------------------------
 
@@ -100,19 +97,19 @@ package body P_Liste_Gen is
 
     begin
         if Est_Vide(List) then
-            raise LISTE_VIDE_ERROR ;
+            raise Liste_Vide_Erreur ;
         else
             if List.all.Element = Data then
                 inserer_en_tete(List, New_Data);
             elsif Est_Vide(List.all.Suivant) then
-                raise FIN_ERROR;
+                raise Fin_Erreur;
             else
                 Inserer_Avant(List.all.Suivant, Data, New_Data);
             end if;
         end if;
     exception
-        when LISTE_VIDE_ERROR => Put_Line("Erreur : Liste vide.");
-        when FIN_ERROR => Put_Line("Erreur : Element non trouvé, insertion impossible.");
+        when Liste_Vide_Erreur => Put_Line("Erreur : Liste vide.");
+        when Fin_Erreur => Put_Line("Erreur : Element non trouvé, insertion impossible.");
     end Inserer_Avant; 
 ------------------------------------------------------------------------------------------
 
@@ -123,21 +120,21 @@ package body P_Liste_Gen is
 
     begin
         if Est_Vide(List) then
-            raise LISTE_VIDE_ERROR ;
+            raise Liste_Vide_Erreur ;
         else
             if List.all.Element = A_Enlever then
                 Tmp := List;
                 List := List.all.Suivant;
                 Free(tmp);
             elsif Est_Vide(List.all.Suivant) then
-                raise FIN_ERROR;
+                raise Fin_Erreur;
             else
                 enlever(List.all.Suivant, A_Enlever);
             end if;
         end if;
     exception
-        when LISTE_VIDE_ERROR => Put_Line("Erreur : Liste vide.");
-        when FIN_ERROR => Put_Line("Erreur : Element non trouvé, suppression impossible.");
+        when Liste_Vide_Erreur => Put_Line("Erreur : Liste vide.");
+        when Fin_Erreur => Put_Line("Erreur : Element non trouvé, suppression impossible.");
     end enlever; 
 ------------------------------------------------------------------------------------------
  
@@ -148,7 +145,7 @@ package body P_Liste_Gen is
         if List /= null then
             return List.all.Element;
         else
-            raise Liste_Vide_Error;
+            raise Liste_Vide_Erreur;
         end if;
     end Recuperer;
 ------------------------------------------------------------------------------------------
@@ -163,7 +160,7 @@ package body P_Liste_Gen is
                 return Recuperer(List);
             end if;
         else
-            raise Liste_Vide_Error;
+            raise Liste_Vide_Erreur;
         end if;
 
     end Recuperer_Nb;

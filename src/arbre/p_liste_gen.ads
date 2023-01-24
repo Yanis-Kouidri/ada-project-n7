@@ -7,6 +7,9 @@ package P_Liste_Gen is
     type T_Cellule is limited private;
     type T_Liste_Chainee is private;
 
+    Liste_Vide_Erreur : exception;
+    Fin_Erreur: exception;
+
     -- Définiton des procédures et fonctions :
 
     function Creer_Liste_Vide return T_Liste_Chainee; 
@@ -50,7 +53,6 @@ private
             Element : Type_Element;
             Suivant : T_Liste_Chainee;
         end record;
-    List_Vide_Error : exception;
 
 
 end P_Liste_Gen; 

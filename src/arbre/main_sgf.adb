@@ -16,6 +16,8 @@ procedure main_sgf is
     
     
     -- Déclaration de variables
+    -- Liste_Vide_Erreur : exception;
+
     Racine, Rep_Courant : T_Arbre;
     Commande_Brute : Unbounded_String;
     Commande_Traitee : P_Arbre.P_Liste_Ustring.T_Liste_Chainee ; 
@@ -69,6 +71,7 @@ begin
             end case;
 
         exception 
+            when P_Liste_Ustring.Liste_Vide_Erreur => Put_Line("Argument manquant");
             when Constraint_Error => Put_Line("Commande inconnue");
         end;
 
