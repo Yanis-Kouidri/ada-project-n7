@@ -228,9 +228,10 @@ package body P_Arbre is
         return Dest;
 
     end Descendre;
-    
 ----------------------------------------------------------------------
 
+
+----------------------------------------------------------------------
     function Monter (F_Courant : in T_Arbre) return T_Arbre is
     begin
 
@@ -240,17 +241,44 @@ package body P_Arbre is
 ----------------------------------------------------------------------
     
 ----------------------------------------------------------------------
+    procedure Supprimer (F_Cible : in out T_Arbre) is
+        Temp : T_Arbre := null;
+        
+    begin
+        -- Cas où l'on veut supprimer le dernier frère de la liste :
+        if F_Cible.all.Frere = null then
+            Free(F_Cible);
+            F_Cible := null;
 
+        -- Cas où ce n'est pas le dernier frère
+        else
+            Temp := F_Cible;
+            F_Cible := F_Cible.all.Frere;
+            Free(Temp);
+            Temp := null;
 
+        end if;
+            
+
+    end Supprimer;
 ----------------------------------------------------------------------
     
+
 ----------------------------------------------------------------------
+    procedure Supprimer_Frere (F_Cible : in T_Arbre) is
+        Temp : T_Arbre := null;
+    begin
+        if F_Cible.all.Frere = null then
+            Put_Line("Pas de frère");
+        else
+            Temp := F_Cible.all.Frere;
+            F_Cible.all.Frere := Temp.all.Frere;
+            Free(Temp);
+        end if;
 
-
+    end Supprimer_Frere;
 ----------------------------------------------------------------------
     
-----------------------------------------------------------------------
-
 
 ----------------------------------------------------------------------
     

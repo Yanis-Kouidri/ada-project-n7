@@ -66,11 +66,22 @@ package P_Commande is
     -- Sémantique : Affiche le chemin répertoire courant
     --
     -- Paramètres : 
-    --      P_Racine : Entrée T_Arbre ; Dossier racine de l'arbre
     --      P_Courant : Entrée T_Arbre ; Répertoire courant.
     --
 --------------------------------------------------
     procedure P_Pwd (P_Courant : in T_Arbre);
+    
+--------------------------------------------------
+    -- P_Rm
+    --
+    -- Sémantique : Supprimer un fichier ou un dossier vide
+    --
+    -- Paramètres : 
+    --      P_Courant : Entrée T_Arbre ; Répertoire courant.
+    --      P_A_Supp : Entrée String ; Nom du répertoire à supprimer
+    --
+--------------------------------------------------
+    procedure P_Rm (P_Courant : in T_Arbre ; P_A_Supp : in String);
 
 --------------------------------------------------
     -- Fonction de test et débbugage :

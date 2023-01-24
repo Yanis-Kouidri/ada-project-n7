@@ -100,7 +100,7 @@ package P_Arbre is
     --              Ex : est ce que le dossier toto contient le fichier/dossier titi.
     --
     -- Paramètres : 
-    --      F_Fils : Entrée T_Arbre ; Dossier à fouiller
+    --      F_Fils : Entrée T_Arbre ; Premier fils du dossier à fouiller
     --      F_Entree : Entrée String ; nom à recherche dans le dossier
     --
     -- Retour :
@@ -209,6 +209,10 @@ package P_Arbre is
     function Descendre (F_Courant : in T_Arbre ; F_fils : in String) return T_Arbre;
 
     function Monter (F_Courant : in T_Arbre) return T_Arbre;
+
+    procedure Supprimer (F_Cible : in out T_Arbre);
+    
+    procedure Supprimer_Frere (F_Cible : in T_Arbre);
     
 --------------------------------------------------
     -- Fonction de test et débbugage :

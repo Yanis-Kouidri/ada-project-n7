@@ -6,7 +6,7 @@ package body P_Commande is
 
 
     -- Instantiation des fonctions et procédures :
-
+    procedure Free is new Ada.Unchecked_Deallocation(T_Fichier, T_Arbre) ; -- Pour libérer de la mém    oire
 
 
 
@@ -100,4 +100,56 @@ package body P_Commande is
 
     end P_Pwd;
 ----------------------------------------------------------------------
+
+
+----------------------------------------------------------------------
+    procedure P_Rm (P_Courant : in T_Arbre ; P_A_Supp : in String) is
+        Cible, temp, test_doss : T_Arbre := null;
+        Valide : Boolean := False;
+
+    begin
+        -- On vérifie s'il existe :
+        if Existe_Fils (P_Courant.all.Fils, P_A_Supp) then
+            test_doss := Descendre (P_Courant, P_A_Supp);
+
+            if Est_Dossier (test_doss) then
+                if test_doss.all.fils = null then
+                    Valide := true;
+                else
+                    Valide := false;
+                    Put_Line("Le dossier doit être vide");
+                end if;
+
+            else
+                Valide := true;
+            end if;
+        else
+            Valide := false;
+            Put_Line("Le fichier/dossier n'existe pas");
+        end if;
+
+
+        if Valide then
+
+            Cible := P_Courant.all.Fils;
+
+            -- Cas où le fichier a supp est le premier frère
+            if P_Courant.all.Fils.all.Nom = P_A_Supp then
+                P_Courant.all.Fils := Cible.all.Frere;
+                Free(Cible);
+            else
+                while Cible.all.Frere.all.nom /= P_A_Supp loop
+                    Cible := Cible.all.Frere;
+
+                end loop; 
+                temp := cible.all.Frere;
+                Cible.all.frere := Cible.all.frere.all.frere;
+                Free (temp);
+            end if;
+
+        end if;
+
+    end P_Rm;
+----------------------------------------------------------------------
+
 end P_Commande ;

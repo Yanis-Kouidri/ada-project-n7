@@ -9,7 +9,7 @@ procedure main_sgf is
 
 
     -- Déclaration de types
-    type T_Commandes is (ls, cd, pwd, quit, mkdir, touch);
+    type T_Commandes is (ls, cd, rm, pwd, quit, mkdir, touch);
     
 
     -- Déclaration de procédures et fonctions
@@ -72,6 +72,8 @@ begin
                 when pwd => 
                     P_Pwd (Rep_Courant);
                     New_Line;
+                when rm =>
+                    P_Rm(Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1));
 
                 when quit => Quitter := true;
 
