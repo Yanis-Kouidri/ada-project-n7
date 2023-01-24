@@ -59,6 +59,18 @@ package P_Commande is
     --
 --------------------------------------------------
     procedure P_Cd (P_Courant : in out T_Arbre ; P_Chemin : in String);
+    
+--------------------------------------------------
+    -- P_Pwd
+    --
+    -- Sémantique : Affiche le chemin répertoire courant
+    --
+    -- Paramètres : 
+    --      P_Racine : Entrée T_Arbre ; Dossier racine de l'arbre
+    --      P_Courant : Entrée T_Arbre ; Répertoire courant.
+    --
+--------------------------------------------------
+    procedure P_Pwd (P_Courant : in T_Arbre);
 
 --------------------------------------------------
     -- Fonction de test et débbugage :

@@ -89,4 +89,15 @@ package body P_Commande is
 ----------------------------------------------------------------------
         
 
+----------------------------------------------------------------------
+    procedure P_Pwd (P_Courant : in T_Arbre) is
+    begin
+        if P_courant /= null then
+
+            P_Pwd (P_Courant.all.Parent);
+            Put (To_String (P_Courant.all.Nom) & "/");
+        end if;
+
+    end P_Pwd;
+----------------------------------------------------------------------
 end P_Commande ;

@@ -9,7 +9,7 @@ procedure main_sgf is
 
 
     -- Déclaration de types
-    type T_Commandes is (ls, cd, quit, mkdir, touch);
+    type T_Commandes is (ls, cd, pwd, quit, mkdir, touch);
     
 
     -- Déclaration de procédures et fonctions
@@ -27,7 +27,7 @@ procedure main_sgf is
 
 begin
     -- Initialisation de l'arbre
-    Ajouter(Racine, "/", True, null);
+    Ajouter(Racine, "", True, null);
     Rep_Courant := Racine;
 
     -- Ajout d'un dossier
@@ -43,7 +43,10 @@ begin
     
     while not Quitter loop
         
-        Put("ykouidri@ada-project: / > "); -- Le prompt
+        Put ("ykouidri@ada-project:");
+        P_Pwd (Rep_Courant);
+        Put (" > "); -- Le prompt
+
 
         -- Récupération de la commande tapée par l'utilisateur :
         Commande_Brute := To_Unbounded_String(get_line);
@@ -65,6 +68,10 @@ begin
                 when touch => P_Touch (Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1));
 
                 when cd => P_Cd (Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1));
+
+                when pwd => 
+                    P_Pwd (Rep_Courant);
+                    New_Line;
 
                 when quit => Quitter := true;
 
