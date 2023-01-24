@@ -62,7 +62,7 @@ begin
 
                 when touch => P_Touch (Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1));
 
-                when cd => Descendre (Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1));
+                when cd => P_Cd (Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1));
 
                 when quit => Quitter := true;
 

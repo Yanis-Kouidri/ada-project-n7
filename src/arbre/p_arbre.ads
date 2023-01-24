@@ -205,7 +205,7 @@ package P_Arbre is
     function Est_Dossier (F_Elem : in T_Arbre) return boolean;
 
     
-    procedure Descendre ( F_Courant : in out T_Arbre ; F_fils : in String);
+    function Descendre (F_Courant : in T_Arbre ; F_fils : in String) return T_Arbre;
 
     
 --------------------------------------------------

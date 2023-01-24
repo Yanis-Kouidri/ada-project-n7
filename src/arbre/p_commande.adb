@@ -58,10 +58,20 @@ package body P_Commande is
 
 
 ----------------------------------------------------------------------
-    procedure P_Cd (P_Dest : in T_Arbre ; P_Courant : in out T_Arbre ) is 
+    procedure P_Cd (P_Courant : in out T_Arbre ; P_Chemin : in String) is 
+        Dest : T_Arbre := null;
     begin
-        if P_Dest /= null then
-            P_Courant := P_Dest;
+        Dest := Descendre (P_Courant, P_Chemin);
+        if Dest /= null then
+
+            if Est_Dossier (Dest) then
+                P_Courant := Dest;
+            else
+                Put_Line ("La destination n'est pas un dossier");
+            end if;
+
+        else
+            Put_Line("La destination n'existe pas");
         end if;
 
 

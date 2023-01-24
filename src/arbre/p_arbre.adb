@@ -211,18 +211,21 @@ package body P_Arbre is
 
 
 ----------------------------------------------------------------------
-    procedure Descendre ( F_Courant : in out T_Arbre ; F_fils : in String) is
+    function Descendre (F_Courant : in T_Arbre ; F_fils : in String) return T_Arbre is
         -- Il faut vérifier que c'est bien un dossier
+        Dest : T_Arbre := F_Courant;
     begin
-        if Existe_Fils ( F_Courant.all.fils, F_Fils) then
-            F_Courant := F_Courant.all.fils;
+        if Existe_Fils (Dest.all.fils, F_Fils) then
+            Dest := Dest.all.fils;
 
-            while F_Courant.all.Nom /= F_fils loop
-                F_Courant := F_Courant.all.Frere;
+            while Dest.all.Nom /= F_fils loop
+                Dest := Dest.all.Frere;
             end loop;
         else
-            Put_Line("Le dossier ne contient pas cet élément");
+            Dest := null;
+            
         end if;
+        return Dest;
 
     end Descendre;
     

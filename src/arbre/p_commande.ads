@@ -58,7 +58,7 @@ package P_Commande is
     --      P_Courant : Entrée Sortie T_Arbre ; Nouveau répertoire courant.
     --
 --------------------------------------------------
-    procedure P_Cd (P_Dest : in T_Arbre ; P_Courant : in out T_Arbre );
+    procedure P_Cd (P_Courant : in out T_Arbre ; P_Chemin : in String);
 
 --------------------------------------------------
     -- Fonction de test et débbugage :
