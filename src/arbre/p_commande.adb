@@ -17,18 +17,39 @@ package body P_Commande is
     procedure P_Ls (P_Dossier : in T_Arbre) is
     begin
         if P_Dossier /= null then
-            if P_Dossier.all.fils /= null then
-                Afficher_dos(P_Dossier);
+
+            if P_Dossier.all.Fils /= null then
+                Afficher_Dos (P_Dossier);
+
             else
-                Put_Line("Dossier vide");
+                raise Dos_Vide_Erreur;
+
             end if;
+            
         else
-            Put_Line("Dossier non trouvé");
+            raise Dos_Non_Trouve_Erreur;
+
         end if;
             
     end P_ls;
 ----------------------------------------------------------------------
 
+----------------------------------------------------------------------
+    procedure P_Ll (P_Dossier : in T_Arbre) is
+    begin
+        if P_Dossier /= null then
+            if P_Dossier.all.Fils /= null then
+                Afficher_Detail (P_Dossier.all.Fils);
+            else
+                raise Dos_Vide_Erreur;
+            end if;
+        else
+            raise Dos_Non_Trouve_Erreur;
+        end if;
+
+
+    end P_Ll;
+----------------------------------------------------------------------
 
 ----------------------------------------------------------------------
     procedure P_Mkdir (P_Dest : in T_Arbre ; P_Nom : in String) is

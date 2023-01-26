@@ -9,6 +9,8 @@ package P_Commande is
     -- Définition des exceptions :
     Pas_Un_Fichier_Erreur : exception;
     Fichier_Inexistant_Erreur : exception;
+    Dos_Vide_Erreur : exception;
+    Dos_Non_Trouve_Erreur : exception;
 
 
     -- Déclaration des fonction et Procédure :
@@ -16,14 +18,24 @@ package P_Commande is
 --------------------------------------------------
     -- P_Ls 
     --
-    -- Sémantique : Affiche le contenu du dossier passé en paramètre 
-    --              ou le contenu de répertoire courant si rien n'est passé en paramètre.
+    -- Sémantique : Affiche le contenu du dossier courant 
     --
     -- Paramètre : 
     --      P_Dossier : Entrée T_Arbre ; Dossier à afficher
     --
 --------------------------------------------------
     procedure P_Ls (P_Dossier : in T_Arbre);
+
+--------------------------------------------------
+    -- P_Ll 
+    --
+    -- Sémantique : Affiche le contenu détaillé du dossier courant
+    --
+    -- Paramètre : 
+    --      P_Dossier : Entrée T_Arbre ; Dossier à afficher
+    --
+--------------------------------------------------
+    procedure P_Ll (P_Dossier : in T_Arbre);
 
 --------------------------------------------------
     -- P_Mkdir

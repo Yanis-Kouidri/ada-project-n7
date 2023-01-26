@@ -227,6 +227,13 @@ package P_Arbre is
     procedure Copier (P_Cible : in T_Arbre ; P_Nom : in String);
     
     function Est_Dossier_Plein (F_Dos : in T_Arbre) return Boolean;
+    
+    procedure Afficher_un_detail (F_Endroit : in T_Arbre);
+
+    procedure Afficher_detail (F_Endroit : in T_Arbre);
+
+    procedure Put_Perm (P_Perm : in T_Tab_Perm);
+
 --------------------------------------------------
     -- Fonction de test et débbugage :
 --------------------------------------------------

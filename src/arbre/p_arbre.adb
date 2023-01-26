@@ -149,21 +149,39 @@ package body P_Arbre is
     begin
         Put_line (To_String (F_Endroit.all.Nom));
     end Afficher_un;
-    
+----------------------------------------------------------------------
     
 
 ----------------------------------------------------------------------
-    procedure Afficher_dos (F_Parent : in T_Arbre) is
+    procedure Afficher_un_detail (F_Endroit : in T_Arbre) is
+    begin
+        Put_Perm (F_Endroit.all.Permission);
+        Put (F_Endroit.all.Taille, 8);
+        Put ("    ");
+        Put (To_String (F_Endroit.all.Nom)  );
+        new_line;
+    end Afficher_un_detail;    
+----------------------------------------------------------------------
+
+
+----------------------------------------------------------------------
+    procedure Afficher_detail (F_Endroit : in T_Arbre) is
+    begin
+        if F_Endroit /= null then
+            Afficher_un_detail (F_Endroit);
+            Afficher_detail (F_Endroit.all.frere);
+        end if;
+    end Afficher_detail;
+----------------------------------------------------------------------
+
+
+----------------------------------------------------------------------
+    procedure Afficher_Dos (F_Parent : in T_Arbre) is
         Temp : T_Arbre := null;
     begin
-        if F_Parent.all.Fils = null then
-            Put_Line ("Dossier vide");
-        else
-            Afficher_Frere(F_Parent.all.Fils);
-        end if;
+        Afficher_Frere (F_Parent.all.Fils);
 
-
-    end Afficher_dos;
+    end Afficher_Dos;
 ----------------------------------------------------------------------
 
 
@@ -308,6 +326,14 @@ package body P_Arbre is
 
     end Est_Dossier_Plein;
 ----------------------------------------------------------------------
+----------------------------------------------------------------------
+    procedure Put_Perm (P_Perm : in T_Tab_Perm) is
+    begin
+        for i in P_Perm'Range loop
+            Put(P_Perm(i));
+        end loop;
+
+    end Put_Perm;
 ----------------------------------------------------------------------
 
 end P_Arbre ;

@@ -9,7 +9,7 @@ procedure main_sgf is
 
 
     -- Déclaration de types
-    type T_Commandes is (ls, cd, cp, rm, vi, cat, pwd, quit, mkdir, touch);
+    type T_Commandes is (ls, ll, cd, cp, rm, vi, cat, pwd, quit, clear, mkdir, touch);
     
 
     -- Déclaration de procédures et fonctions
@@ -51,47 +51,57 @@ begin
         -- Récupération de la commande tapée par l'utilisateur :
         Commande_Brute := To_Unbounded_String (Get_Line);
 
-        -- Récupération du premier mot de la commande tapée par l'utilisateur :
-        Commande_Simple := To_Unbounded_String (Recup_Commande (To_String (Commande_Brute)));
+        if Commande_Brute /= Null_Unbounded_String then 
 
-        begin    
-            case T_Commandes'Value (To_String (Commande_Simple)) is 
+            -- Récupération du premier mot de la commande tapée par l'utilisateur :
+            Commande_Simple := To_Unbounded_String (Recup_Commande (To_String (Commande_Brute)));
 
-                when ls => P_ls(Rep_Courant);
+            begin    
+                case T_Commandes'Value (To_String (Commande_Simple)) is 
 
-                when mkdir => 
-                    -- put_line("Nom :");
-                    -- put_line (Recup_Arg (To_String (Commande_Brute), 1));
+                    when ls => P_Ls (Rep_Courant);
                     
-                    P_Mkdir (Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1));
+                    when ll => P_Ll (Rep_Courant);
 
-                when touch => P_Touch (Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1));
+                    when mkdir => 
+                        -- put_line("Nom :");
+                        -- put_line (Recup_Arg (To_String (Commande_Brute), 1));
+                        
+                        P_Mkdir (Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1));
 
-                when cd => P_Cd (Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1));
+                    when touch => P_Touch (Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1));
 
-                when pwd => 
-                    P_Pwd (Rep_Courant);
-                    New_Line;
-                when rm =>
-                    P_Rm(Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1));
-                    
-                when cp => P_Cp (Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1),
-                                              Recup_Arg (To_String (Commande_Brute), 2));
+                    when cd => P_Cd (Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1));
 
-                when vi => P_Vi (Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1));
+                    when pwd => 
+                        P_Pwd (Rep_Courant);
+                        New_Line;
+                    when rm =>
+                        P_Rm(Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1));
+                        
+                    when cp => P_Cp (Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1),
+                                                  Recup_Arg (To_String (Commande_Brute), 2));
 
-                when cat => P_Cat (Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1));
+                    when vi => P_Vi (Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1));
 
-                when quit => Quitter := true;
+                    when cat => P_Cat (Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1));
 
-            end case;
+                    when clear => Put (ASCII.ESC & "[2J");
 
-        exception 
-            when P_Liste_Ustring.Liste_Vide_Erreur => Put_Line ("Argument manquant");
-            when Fichier_Inexistant_Erreur => Put_Line ("Le fichier spécifié n'existe pas");
-            when Pas_Un_Fichier_Erreur => Put_Line ("Impossible : l'élément spécifié est un dossier");
-            when Constraint_Error => Put_Line ("Commande inconnue");
-        end;
+                    when quit => Quitter := true;
+
+                end case;
+
+            exception 
+                when P_Liste_Ustring.Liste_Vide_Erreur => Put_Line ("Argument manquant");
+                when Fichier_Inexistant_Erreur => Put_Line ("Le fichier spécifié n'existe pas");
+                when Pas_Un_Fichier_Erreur => Put_Line ("Impossible : l'élément spécifié est un dossier");
+                when Dos_Vide_Erreur => Put_Line ("Dossier vide");
+                when Dos_Non_Trouve_Erreur => Put_Line ("Le dossier spécifié n'existe pas");
+                when Constraint_Error => Put_Line ("Commande inconnue");
+            end;
+
+        end if;
 
     end loop;
     
