@@ -7,6 +7,8 @@ package P_Commande is
 
 
     -- Définition des exceptions :
+    Pas_Un_Fichier_Erreur : exception;
+    Fichier_Inexistant_Erreur : exception;
 
 
     -- Déclaration des fonction et Procédure :
@@ -109,6 +111,19 @@ package P_Commande is
     --
 --------------------------------------------------
     procedure P_Cat (P_Dossier : in T_Arbre ; P_Fichier : in String);
+
+--------------------------------------------------
+    -- P_Vi
+    --
+    -- Sémantique : Modifie le contenu d'un fichier
+    --
+    -- Paramètres : 
+    --      P_Dossier : Entrée T_Arbre ; Dossier du fichier à modifier.
+    --      P_Fichier : Entrée String ; Nom du fichier à modifier
+    --      
+    --
+--------------------------------------------------
+    procedure P_Vi (P_Courant : in T_Arbre ; P_Fichier : in String);
 
 --------------------------------------------------
     -- Fonction de test et débbugage :

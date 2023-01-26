@@ -186,9 +186,49 @@ package body P_Commande is
         Fichier : T_Arbre := null;
     begin
         Fichier := Descendre (P_Dossier, P_Fichier);
+        if Fichier /= null then
+
+            if not Est_Dossier(Fichier) then
+                Put_Line (To_String (Fichier.all.Contenu));
+
+            else
+                raise Pas_Un_Fichier_Erreur;
+            end if;
+        else
+            raise Fichier_Inexistant_Erreur;
+        end if;
 
     end P_Cat;
+----------------------------------------------------------------------
 
+
+    
+----------------------------------------------------------------------
+    procedure P_Vi (P_Courant : in T_Arbre ; P_Fichier : in String) is
+        Fichier : T_Arbre := null;
+        Nouv_contenu : Unbounded_String;
+
+    begin
+        Fichier := Descendre (P_Courant, P_Fichier);
+
+        if Fichier /= null then
+
+            if not Est_Dossier (Fichier) then
+                Nouv_contenu := To_Unbounded_String (Get_Line);
+                Fichier.all.Contenu := Fichier.all.Contenu & Nouv_contenu;
+                Fichier.all.Taille := Length (Fichier.all.Contenu);
+
+            else 
+                raise Pas_Un_Fichier_Erreur;
+
+            end if;
+
+        else
+            raise Fichier_Inexistant_Erreur;
+
+        end if;
+
+    end P_Vi;
 ----------------------------------------------------------------------
 
 end P_Commande ;
