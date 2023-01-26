@@ -179,4 +179,16 @@ package body P_Commande is
 
     end P_Cp;
 ----------------------------------------------------------------------
+
+
+----------------------------------------------------------------------
+    procedure P_Cat (P_Dossier : in T_Arbre ; P_Fichier : in String) is
+        Fichier : T_Arbre := null;
+    begin
+        Fichier := Descendre (P_Dossier, P_Fichier);
+
+    end P_Cat;
+
+----------------------------------------------------------------------
+
 end P_Commande ;

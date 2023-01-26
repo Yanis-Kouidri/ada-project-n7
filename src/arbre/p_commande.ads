@@ -98,6 +98,19 @@ package P_Commande is
     procedure P_Cp (P_Courant : in T_Arbre ; P_A_Copier, P_Nouv_Nom : in String);
 
 --------------------------------------------------
+    -- P_Cat
+    --
+    -- Sémantique : Affiche le contenu d'un fichier.
+    --
+    -- Paramètres : 
+    --      P_Dossier : Entrée T_Arbre ; Dossier du fichier à afficher.
+    --      P_Fichier : Entrée String ; Nom du fichier à afficher
+    --      
+    --
+--------------------------------------------------
+    procedure P_Cat (P_Dossier : in T_Arbre ; P_Fichier : in String);
+
+--------------------------------------------------
     -- Fonction de test et débbugage :
 --------------------------------------------------
 
