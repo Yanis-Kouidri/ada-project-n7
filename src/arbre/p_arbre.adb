@@ -281,7 +281,33 @@ package body P_Arbre is
     
 
 ----------------------------------------------------------------------
+    procedure Copier (P_Cible : in T_Arbre ; P_Nom : in String) is
+        Nouv : T_Arbre := null;
+        Localisation : T_Arbre := P_Cible;
+    begin
+        -- Création du nouveau fichier
+        Nouv := new T_Fichier'( To_Unbounded_String (P_Nom), P_Cible.all.Taille,
+                                P_Cible.all.Permission, P_Cible.all.Parent, null, null, P_Cible.all.Contenu); 
+        
+        -- Déplacement au dernier frère
+        while Localisation.all.frere /= null loop
+            Localisation := Localisation.all.frere;
+        end loop;
+
+        -- Ajout du nouveau fichier.
+        Localisation.all.frere := Nouv;
+
+        
+
+    end Copier;
     
+----------------------------------------------------------------------
+    function Est_Dossier_Plein (F_Dos : in T_Arbre) return Boolean is
+    begin
+        return Est_Dossier (F_Dos) and F_Dos.all.fils /= null;
+
+    end Est_Dossier_Plein;
+----------------------------------------------------------------------
 ----------------------------------------------------------------------
 
 end P_Arbre ;

@@ -94,7 +94,7 @@ package P_Arbre is
 
 
 --------------------------------------------------
-    -- Existe_fils
+    -- Existe_Fils
     --
     -- Sémantique : Cherche dans un dossier si un fils existe en fonction de son nom.
     --              Ex : est ce que le dossier toto contient le fichier/dossier titi.
@@ -106,7 +106,7 @@ package P_Arbre is
     -- Retour :
     --      Type : Boolean ; vrai si le nom existe, faux sinon
 --------------------------------------------------
-    function Existe_fils (F_Fils : in T_Arbre ; F_Nom_Fils : in String) return Boolean;
+    function Existe_Fils (F_Fils : in T_Arbre ; F_Nom_Fils : in String) return Boolean;
 
 
 --------------------------------------------------
@@ -214,6 +214,19 @@ package P_Arbre is
     
     procedure Supprimer_Frere (F_Cible : in T_Arbre);
     
+--------------------------------------------------
+    -- Copier
+    --
+    -- Sémantique : Copier un fichier en créant un frère avec un nouveau nom
+    --
+    -- Paramètre :
+    --      P_Cible : Entrée T_Arbre ; Fichier à copier
+    --      P_Nom : Entrée String ; Nom du nouveau fichier
+    --
+--------------------------------------------------
+    procedure Copier (P_Cible : in T_Arbre ; P_Nom : in String);
+    
+    function Est_Dossier_Plein (F_Dos : in T_Arbre) return Boolean;
 --------------------------------------------------
     -- Fonction de test et débbugage :
 --------------------------------------------------

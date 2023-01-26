@@ -84,6 +84,20 @@ package P_Commande is
     procedure P_Rm (P_Courant : in T_Arbre ; P_A_Supp : in String);
 
 --------------------------------------------------
+    -- P_Cp
+    --
+    -- Sémantique : Copier un fichier
+    --
+    -- Paramètres : 
+    --      P_Courant : Entrée T_Arbre ; Répertoire courant.
+    --      P_A_Copier : Entrée String ; Nom du fichier à copier
+    --      P_Nouv_Nom : Entrée String ; Nom de la nouvelle copie
+    --
+    --
+--------------------------------------------------
+    procedure P_Cp (P_Courant : in T_Arbre ; P_A_Copier, P_Nouv_Nom : in String);
+
+--------------------------------------------------
     -- Fonction de test et débbugage :
 --------------------------------------------------
 

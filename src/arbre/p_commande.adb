@@ -152,4 +152,31 @@ package body P_Commande is
     end P_Rm;
 ----------------------------------------------------------------------
 
+
+----------------------------------------------------------------------
+    procedure P_Cp (P_Courant : in T_Arbre ; P_A_Copier, P_Nouv_Nom : in String) is
+        A_Copier : T_Arbre := null;
+    begin
+
+        -- Je vérifie si le fichier existe
+        if Existe_Fils (P_Courant.all.Fils, P_A_Copier) then
+
+            -- Je récupère un pointeur sur mon fichier à copier
+            A_Copier := Descendre (P_Courant, P_A_Copier);
+
+            if Est_Dossier_Plein (A_Copier) then
+                    Put_Line ("Impossible de copier un dossier non vide");
+            else
+                -- Je copie.
+                Copier (A_Copier, P_Nouv_Nom);
+            end if;
+                
+
+
+        else
+            Put_Line("Le fichier n'existe pas");
+        end if;
+
+    end P_Cp;
+----------------------------------------------------------------------
 end P_Commande ;
