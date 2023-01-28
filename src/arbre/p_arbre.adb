@@ -107,7 +107,7 @@ package body P_Arbre is
 ----------------------------------------------------------------------
 
 ----------------------------------------------------------------------
-    function Existe_fils (F_Fils : in T_Arbre ; F_Nom_Fils : in String) return Boolean is
+    function Existe_Fils (F_Fils : in T_Arbre ; F_Nom_Fils : in String) return Boolean is
     begin
         if F_Fils /= null then
             if To_String(F_Fils.all.Nom) = F_Nom_Fils then
@@ -121,7 +121,7 @@ package body P_Arbre is
         end if;
 
 
-    end Existe_fils;
+    end Existe_Fils;
 ----------------------------------------------------------------------
 
 

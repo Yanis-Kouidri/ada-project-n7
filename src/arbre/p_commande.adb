@@ -27,12 +27,13 @@ package body P_Commande is
             end if;
             
         else
-            raise Dos_Non_Trouve_Erreur;
+            raise Fichier_Non_Trouve_Erreur;
 
         end if;
             
     end P_ls;
 ----------------------------------------------------------------------
+
 
 ----------------------------------------------------------------------
     procedure P_Ll (P_Dossier : in T_Arbre) is
@@ -44,21 +45,21 @@ package body P_Commande is
                 raise Dos_Vide_Erreur;
             end if;
         else
-            raise Dos_Non_Trouve_Erreur;
+            raise Fichier_Non_Trouve_Erreur;
         end if;
 
 
     end P_Ll;
 ----------------------------------------------------------------------
 
-----------------------------------------------------------------------
-    procedure P_Mkdir (P_Dest : in T_Arbre ; P_Nom : in String) is
-    begin
-        if P_Dest /= null then
-            Ajouter_Dans_Dos (P_Dest, P_Nom, True);
 
+----------------------------------------------------------------------
+    procedure P_Mkdir (P_Courant : in T_Arbre ; P_Nom : in String) is
+    begin
+        if not Existe_Fils (P_Courant.all.Fils, P_Nom) then
+            Ajouter_Dans_Dos (P_Courant, P_Nom, True);
         else
-            Put_Line("Lieu de création introuvable");
+            raise Fich_Deja_Existant_Erreur;
         end if;
         
     end P_mkdir;
@@ -66,14 +67,14 @@ package body P_Commande is
 
 
 ----------------------------------------------------------------------
-    procedure P_Touch (P_Dest : in T_Arbre ; P_Nom : in String) is
+    procedure P_Touch (P_Courant : in T_Arbre ; P_Nom : in String) is
     begin
-        if P_Dest /= null then
-            Ajouter_Dans_Dos (P_Dest, P_Nom, False);
-
+        if not Existe_Fils (P_Courant.all.Fils, P_Nom) then
+            Ajouter_Dans_Dos (P_Courant, P_Nom, False);
         else
-            Put_Line("Lieu de création introuvable");
+            raise Fich_Deja_Existant_Erreur;
         end if;
+
     end P_Touch;
 ----------------------------------------------------------------------
 
@@ -82,14 +83,16 @@ package body P_Commande is
     procedure P_Cd (P_Courant : in out T_Arbre ; P_Chemin : in String) is 
         Dest : T_Arbre := null;
     begin
+        -- Cas particulier :
         if P_Chemin = ".." then
             Dest := Monter (P_Courant);
             if Dest /= null then
                 P_Courant := Dest;
             else
-                Put_Line("Racine atteinte");
+                raise Racine_Atteinte_Erreur;
             end if;
 
+        -- Cas général :
         else
             Dest := Descendre (P_Courant, P_Chemin);
             if Dest /= null then
@@ -138,7 +141,7 @@ package body P_Commande is
                     Valide := true;
                 else
                     Valide := false;
-                    Put_Line("Le dossier doit être vide");
+                    raise Dos_Non_Vide_Erreur;
                 end if;
 
             else
@@ -146,7 +149,7 @@ package body P_Commande is
             end if;
         else
             Valide := false;
-            Put_Line("Le fichier/dossier n'existe pas");
+            raise Fichier_Non_Trouve_Erreur;
         end if;
 
 
@@ -178,6 +181,9 @@ package body P_Commande is
     procedure P_Cp (P_Courant : in T_Arbre ; P_A_Copier, P_Nouv_Nom : in String) is
         A_Copier : T_Arbre := null;
     begin
+        if Existe_Fils (P_Courant.all.Fils, P_Nouv_Nom) then
+            raise Fich_Deja_Existant_Erreur;
+        end if;
 
         -- Je vérifie si le fichier existe
         if Existe_Fils (P_Courant.all.Fils, P_A_Copier) then
@@ -186,16 +192,14 @@ package body P_Commande is
             A_Copier := Descendre (P_Courant, P_A_Copier);
 
             if Est_Dossier_Plein (A_Copier) then
-                    Put_Line ("Impossible de copier un dossier non vide");
+                raise Dos_Non_Vide_Erreur;
             else
                 -- Je copie.
                 Copier (A_Copier, P_Nouv_Nom);
             end if;
-                
-
 
         else
-            Put_Line("Le fichier n'existe pas");
+            raise Fichier_Non_Trouve_Erreur;
         end if;
 
     end P_Cp;
@@ -216,12 +220,11 @@ package body P_Commande is
                 raise Pas_Un_Fichier_Erreur;
             end if;
         else
-            raise Fichier_Inexistant_Erreur;
+            raise Fichier_Non_Trouve_Erreur;
         end if;
 
     end P_Cat;
 ----------------------------------------------------------------------
-
 
     
 ----------------------------------------------------------------------
@@ -245,11 +248,30 @@ package body P_Commande is
             end if;
 
         else
-            raise Fichier_Inexistant_Erreur;
+            raise Fichier_Non_Trouve_Erreur;
 
         end if;
 
     end P_Vi;
 ----------------------------------------------------------------------
+
+
+
+----------------------------------------------------------------------
+    procedure P_Mv (P_Courant : in T_Arbre ; P_A_Modif, P_Nouv_Nom : in String) is 
+        Fichier : T_Arbre := null;
+    begin
+        Fichier := Descendre (P_Courant, P_A_Modif);
+
+        if Fichier /= null then
+            Fichier.all.Nom := To_Unbounded_String (P_Nouv_Nom);
+        else
+            raise Fichier_Non_Trouve_Erreur;
+        end if;
+
+    end P_Mv;
+----------------------------------------------------------------------
+
+
 
 end P_Commande ;

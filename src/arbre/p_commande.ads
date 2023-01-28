@@ -8,9 +8,11 @@ package P_Commande is
 
     -- Définition des exceptions :
     Pas_Un_Fichier_Erreur : exception;
-    Fichier_Inexistant_Erreur : exception;
     Dos_Vide_Erreur : exception;
-    Dos_Non_Trouve_Erreur : exception;
+    Dos_Non_Vide_Erreur : exception;
+    Fichier_Non_Trouve_Erreur : exception;
+    Racine_Atteinte_Erreur : exception;
+    Fich_Deja_Existant_Erreur : exception;
 
 
     -- Déclaration des fonction et Procédure :
@@ -40,14 +42,20 @@ package P_Commande is
 --------------------------------------------------
     -- P_Mkdir
     --
-    -- Sémantique : Crée un dossier 
+    -- Sémantique : Crée un dossier dans le repertoire passé en paramètre. 
     --
     -- Paramètres : 
-    --      P_Dest : Entrée T_Arbre ; Dossier dans lequel créer le nouveau dossier
+    --      P_Courant : Entrée T_Arbre ; Dossier dans lequel créer le nouveau dossier
     --      P_Nom : Entrée Sting ; Nom du nouveau dossier.
     --
+    -- Préconditions :
+    --      P_Courant existe (/= null).
+    --      P_Courant est un dossier.
+    --
+    -- Postcondition :
+    --      Un dossier ayant pour nom P_Nom existe dans le dossier P_Courant.
 --------------------------------------------------
-    procedure P_Mkdir (P_Dest : in T_Arbre ; P_Nom : in String);
+    procedure P_Mkdir (P_Courant : in T_Arbre ; P_Nom : in String);
     
     
 --------------------------------------------------
@@ -56,11 +64,17 @@ package P_Commande is
     -- Sémantique : Crée un fichier 
     --
     -- Paramètres : 
-    --      P_Dest : Entrée T_Arbre ; Dossier dans lequel créer le nouveau fichier
+    --      P_Courant : Entrée T_Arbre ; Dossier dans lequel créer le nouveau fichier.
     --      P_Nom : Entrée Sting ; Nom du nouveau fichier.
     --
+    -- Préconditions :
+    --      P_Courant existe (/= null).
+    --      P_Courant est un dossier.
+    --
+    -- Postcondition :
+    --      Un fichier ayant pour nom P_Nom existe dans le dossier P_Courant.
 --------------------------------------------------
-    procedure P_Touch (P_Dest : in T_Arbre ; P_Nom : in String);
+    procedure P_Touch (P_Courant : in T_Arbre ; P_Nom : in String);
 
 --------------------------------------------------
     -- P_Cd
@@ -130,12 +144,27 @@ package P_Commande is
     -- Sémantique : Modifie le contenu d'un fichier
     --
     -- Paramètres : 
-    --      P_Dossier : Entrée T_Arbre ; Dossier du fichier à modifier.
+    --      P_Courant : Entrée T_Arbre ; Dossier du fichier à modifier.
     --      P_Fichier : Entrée String ; Nom du fichier à modifier
     --      
     --
 --------------------------------------------------
     procedure P_Vi (P_Courant : in T_Arbre ; P_Fichier : in String);
+
+--------------------------------------------------
+    -- P_Mv
+    --
+    -- Sémantique : Renomme un élément (dossier ou fichier)
+    --
+    -- Paramètres : 
+    --      P_Courant : Entrée T_Arbre ; Dossier du fichier à renommer.
+    --      P_A_Modif : Entrée String ; Nom du fichier à renommer.
+    --      P_Nouv_Nom : Entrée String ; Nouveau nom du fichier.
+    --      
+    --
+--------------------------------------------------
+    procedure P_Mv (P_Courant : in T_Arbre ; P_A_Modif, P_Nouv_Nom : in String);
+
 
 --------------------------------------------------
     -- Fonction de test et débbugage :
