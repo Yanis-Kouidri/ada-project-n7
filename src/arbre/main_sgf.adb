@@ -9,7 +9,7 @@ procedure main_sgf is
 
 
     -- Déclaration de types
-    type T_Commandes is (ls, ll, cd, cp, rm, vi, mv, cat, pwd, quit, clear, mkdir, touch);
+    type T_Commandes is (ls, ll, cd, cp, rm, vi, mv, tar, cat, pwd, quit, clear, mkdir, touch);
     
 
     -- Déclaration de procédures et fonctions
@@ -91,6 +91,8 @@ begin
                     when mv => P_Mv (Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1),
                                                   Recup_Arg (To_String (Commande_Brute), 2));
 
+                    when tar => P_tar (Rep_Courant, Recup_Arg (To_String (Commande_Brute), 1));
+
                     when quit => Quitter := true;
 
                 end case;
@@ -100,6 +102,8 @@ begin
                 when P_Liste_Ustring.Liste_Vide_Erreur => Put_Line ("Argument manquant");
 
                 when Pas_Un_Fichier_Erreur => Put_Line ("Impossible : l'élément spécifié est un dossier");
+
+                when Pas_Un_Dossier_Erreur => Put_Line ("Impossible : l'élément spécifié est un fichier");
                 
                 when Dos_Vide_Erreur => Put_Line ("Dossier vide");
 

@@ -8,6 +8,7 @@ package P_Commande is
 
     -- Définition des exceptions :
     Pas_Un_Fichier_Erreur : exception;
+    Pas_Un_Dossier_Erreur : exception;
     Dos_Vide_Erreur : exception;
     Dos_Non_Vide_Erreur : exception;
     Fichier_Non_Trouve_Erreur : exception;
@@ -164,6 +165,26 @@ package P_Commande is
     --
 --------------------------------------------------
     procedure P_Mv (P_Courant : in T_Arbre ; P_A_Modif, P_Nouv_Nom : in String);
+
+--------------------------------------------------
+    -- P_Tar
+    --
+    -- Sémantique : Crée une archive (fichier d'extention .tar) a partir d'un dossier existant
+    --              L'archive à pour taille la somme des tailles des fichiers du dossier à archiver.
+    --
+    -- Paramètres : 
+    --      P_Courant : Entrée T_Arbre ; Dossier contenant le dossier à archiver
+    --      P_Dossier : Entrée String ; Nom du dossier à archiver.
+    --      
+    -- Préconditions :
+    --      P_Courant existe (/= null).
+    --      P_Courant est un dossier.
+    --
+    -- Postconditions :
+    --      Un fichier d'extention .tar est créé.
+    --      Sa taille est la somme des tailles des fichiers du dossier à archiver.
+--------------------------------------------------
+    procedure P_Tar (P_Courant : in T_Arbre ; P_Dossier : in String);
 
 
 --------------------------------------------------

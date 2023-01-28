@@ -234,6 +234,8 @@ package P_Arbre is
 
     procedure Put_Perm (P_Perm : in T_Tab_Perm);
 
+    function Somme_Taille_Dos (F_Dossier : in T_Arbre) return Integer;
+
 --------------------------------------------------
     -- Fonction de test et débbugage :
 --------------------------------------------------

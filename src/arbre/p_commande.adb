@@ -273,5 +273,34 @@ package body P_Commande is
 ----------------------------------------------------------------------
 
 
+----------------------------------------------------------------------
+    procedure P_Tar (P_Courant : in T_Arbre ; P_Dossier : in String) is
+        Somme_Taille : integer := 0; --Somme des tailles
+        A_Archiver, Archive : T_Arbre := null;
+    begin
+        A_Archiver := Descendre (P_Courant, P_Dossier);
+        Archive := Descendre (P_Courant, P_Dossier & ".tar");
+
+        if A_Archiver = null then
+            raise Fichier_Non_Trouve_Erreur;
+        end if;
+
+        if not Est_Dossier (A_Archiver) then
+            raise Pas_Un_Dossier_Erreur;
+        end if;
+
+        if Archive /= null then
+            raise Fich_Deja_Existant_Erreur;
+        end if;
+
+        Somme_Taille := Somme_Taille_Dos (A_Archiver);
+        Ajouter_Dans_Dos (P_Courant, P_Dossier & ".tar", false);
+
+        Archive := Descendre (P_Courant, P_Dossier & ".tar");
+        Archive.all.Taille := Somme_Taille;
+
+
+    end P_Tar;
+----------------------------------------------------------------------
 
 end P_Commande ;

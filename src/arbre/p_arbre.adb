@@ -318,7 +318,9 @@ package body P_Arbre is
         
 
     end Copier;
-    
+----------------------------------------------------------------------
+
+
 ----------------------------------------------------------------------
     function Est_Dossier_Plein (F_Dos : in T_Arbre) return Boolean is
     begin
@@ -326,6 +328,8 @@ package body P_Arbre is
 
     end Est_Dossier_Plein;
 ----------------------------------------------------------------------
+
+
 ----------------------------------------------------------------------
     procedure Put_Perm (P_Perm : in T_Tab_Perm) is
     begin
@@ -335,5 +339,25 @@ package body P_Arbre is
 
     end Put_Perm;
 ----------------------------------------------------------------------
+
+
+----------------------------------------------------------------------
+    function Somme_Taille_Dos (F_Dossier : in T_Arbre) return Integer is
+    begin
+
+        if F_Dossier = null then
+            return 0;
+        elsif Est_Dossier (F_Dossier) then
+            return Somme_Taille_Dos (F_Dossier.all.Fils) + Somme_Taille_Dos (F_Dossier.all.Frere);
+        else
+            return F_Dossier.all.Taille + Somme_Taille_Dos (F_Dossier.all.Frere);
+        end if;
+
+
+    end Somme_Taille_Dos;
+
+----------------------------------------------------------------------
+
+
 
 end P_Arbre ;
