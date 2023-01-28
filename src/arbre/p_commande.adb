@@ -40,6 +40,7 @@ package body P_Commande is
     begin
         if P_Dossier /= null then
             if P_Dossier.all.Fils /= null then
+                Put_Line("[Droits]      [Taille]  [Nom]");
                 Afficher_Detail (P_Dossier.all.Fils);
             else
                 raise Dos_Vide_Erreur;
@@ -100,11 +101,11 @@ package body P_Commande is
                 if Est_Dossier (Dest) then
                     P_Courant := Dest;
                 else
-                    Put_Line ("La destination n'est pas un dossier");
+                    raise Pas_Un_Dossier_Erreur;
                 end if;
 
             else
-                Put_Line("La destination n'existe pas");
+                raise Fichier_Non_Trouve_Erreur;
             end if;
         end if;
 
@@ -128,49 +129,36 @@ package body P_Commande is
 
 ----------------------------------------------------------------------
     procedure P_Rm (P_Courant : in T_Arbre ; P_A_Supp : in String) is
-        Cible, temp, test_doss : T_Arbre := null;
+        Cible, Temp, A_Supp : T_Arbre := null;
         Valide : Boolean := False;
 
     begin
+        A_Supp := Descendre (P_Courant, P_A_Supp);
+
         -- On vérifie s'il existe :
-        if Existe_Fils (P_Courant.all.Fils, P_A_Supp) then
-            test_doss := Descendre (P_Courant, P_A_Supp);
-
-            if Est_Dossier (test_doss) then
-                if test_doss.all.fils = null then
-                    Valide := true;
-                else
-                    Valide := false;
-                    raise Dos_Non_Vide_Erreur;
-                end if;
-
-            else
-                Valide := true;
-            end if;
-        else
-            Valide := false;
+        if A_Supp = null then
             raise Fichier_Non_Trouve_Erreur;
         end if;
 
+        -- On vérifie s'il est vide
+        if Est_Dossier_Plein (A_Supp) then
+            raise Dos_Non_Vide_Erreur;
+        end if;
 
-        if Valide then
+        Cible := P_Courant.all.Fils;
 
-            Cible := P_Courant.all.Fils;
+        -- Cas où le fichier a supp est le premier frère
+        if P_Courant.all.Fils.all.Nom = P_A_Supp then
+            P_Courant.all.Fils := Cible.all.Frere;
+            Free (Cible);
+        else
+            while Cible.all.Frere.all.nom /= P_A_Supp loop
+                Cible := Cible.all.Frere;
 
-            -- Cas où le fichier a supp est le premier frère
-            if P_Courant.all.Fils.all.Nom = P_A_Supp then
-                P_Courant.all.Fils := Cible.all.Frere;
-                Free(Cible);
-            else
-                while Cible.all.Frere.all.nom /= P_A_Supp loop
-                    Cible := Cible.all.Frere;
-
-                end loop; 
-                temp := cible.all.Frere;
-                Cible.all.frere := Cible.all.frere.all.frere;
-                Free (temp);
-            end if;
-
+            end loop; 
+            Temp := Cible.all.Frere;
+            Cible.all.Frere := Cible.all.Frere.all.Frere;
+            Free (Temp);
         end if;
 
     end P_Rm;

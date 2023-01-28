@@ -59,22 +59,7 @@ package body P_Arbre is
 
 
 ----------------------------------------------------------------------
-    function Recup_Commande (F_Chaine : in String) return String is
-        decoup : P_Liste_Ustring.T_Liste_Chainee ; -- Pointeur sur T_Cellule d'une liste chainée d'unbounded string
-        commande : Unbounded_String;
-
-    begin
-        decoup := Decoupage (F_Chaine, ' ');
-        commande := Recuperer(decoup);
-
-
-        return To_String(commande);
-    end Recup_Commande;
-----------------------------------------------------------------------
-
-
-----------------------------------------------------------------------
-    function Recup_Arg (F_Chaine : in String ; F_Arg_nb : in Integer) return String is
+    function Recup_Arg (F_Chaine : in String ; F_Arg_nb : in Natural) return String is
         Decoup : P_Liste_Ustring.T_Liste_Chainee ; -- Pointeur sur T_Cellule d'une liste chainée d'unbounded string
         Arg : Unbounded_String;
     begin
@@ -87,24 +72,6 @@ package body P_Arbre is
 
 ----------------------------------------------------------------------
 
-----------------------------------------------------------------------
-    function Existe (F_Chemin : in P_Liste_Ustring.T_Liste_Chainee ; F_Entree : in T_Arbre) return Boolean is
-
-        Liste : P_Liste_Ustring.T_Liste_Chainee := F_Chemin;
-        Arbre : T_Arbre := F_Entree; -- Le pointeur qui va aller jusqu'à la destination
-        Verdict : Boolean := false; -- Est ce que le chemin existe ?
-
-        --A_Trouver : S
-    begin
-        if Existe_Fils (Arbre, To_String (Recuperer (Liste))) then
-           null; 
-            -- Existe (Liste.all.Suivant, 
-        end if;
-
-
-        return Verdict;
-    end Existe;
-----------------------------------------------------------------------
 
 ----------------------------------------------------------------------
     function Existe_Fils (F_Fils : in T_Arbre ; F_Nom_Fils : in String) return Boolean is
@@ -169,7 +136,7 @@ package body P_Arbre is
     begin
         if F_Endroit /= null then
             Afficher_un_detail (F_Endroit);
-            Afficher_detail (F_Endroit.all.frere);
+            Afficher_detail (F_Endroit.all.Frere);
         end if;
     end Afficher_detail;
 ----------------------------------------------------------------------
@@ -201,7 +168,7 @@ package body P_Arbre is
         Temp : T_Arbre := null;
     begin
         -- Cas ou on veut ajouter dans un dossier vide :
-        if F_Parent.all.fils = null then
+        if F_Parent.all.Fils = null then
             Ajouter (F_Parent.all.Fils, F_Nom, F_Est_Dossier, F_Parent);
 
         -- Si le dossier n'est pas vide, on parcourt jusqu'à trouver le dernier frère :
@@ -229,14 +196,14 @@ package body P_Arbre is
 
 
 ----------------------------------------------------------------------
-    function Descendre (F_Courant : in T_Arbre ; F_fils : in String) return T_Arbre is
+    function Descendre (F_Courant : in T_Arbre ; F_Fils : in String) return T_Arbre is
         -- Il faut vérifier que c'est bien un dossier
         Dest : T_Arbre := F_Courant;
     begin
-        if Existe_Fils (Dest.all.fils, F_Fils) then
-            Dest := Dest.all.fils;
+        if Existe_Fils (Dest.all.Fils, F_Fils) then
+            Dest := Dest.all.Fils;
 
-            while Dest.all.Nom /= F_fils loop
+            while Dest.all.Nom /= F_Fils loop
                 Dest := Dest.all.Frere;
             end loop;
         else
@@ -258,40 +225,17 @@ package body P_Arbre is
     end Monter;
 ----------------------------------------------------------------------
     
-----------------------------------------------------------------------
-    procedure Supprimer (F_Cible : in out T_Arbre) is
-        Temp : T_Arbre := null;
-        
-    begin
-        -- Cas où l'on veut supprimer le dernier frère de la liste :
-        if F_Cible.all.Frere = null then
-            Free(F_Cible);
-            F_Cible := null;
-
-        -- Cas où ce n'est pas le dernier frère
-        else
-            Temp := F_Cible;
-            F_Cible := F_Cible.all.Frere;
-            Free(Temp);
-            Temp := null;
-
-        end if;
-            
-
-    end Supprimer;
-----------------------------------------------------------------------
-    
 
 ----------------------------------------------------------------------
     procedure Supprimer_Frere (F_Cible : in T_Arbre) is
         Temp : T_Arbre := null;
     begin
         if F_Cible.all.Frere = null then
-            Put_Line("Pas de frère");
+            Put_Line ("Pas de frère");
         else
             Temp := F_Cible.all.Frere;
             F_Cible.all.Frere := Temp.all.Frere;
-            Free(Temp);
+            Free (Temp);
         end if;
 
     end Supprimer_Frere;
@@ -308,12 +252,12 @@ package body P_Arbre is
                                 P_Cible.all.Permission, P_Cible.all.Parent, null, null, P_Cible.all.Contenu); 
         
         -- Déplacement au dernier frère
-        while Localisation.all.frere /= null loop
-            Localisation := Localisation.all.frere;
+        while Localisation.all.Frere /= null loop
+            Localisation := Localisation.all.Frere;
         end loop;
 
         -- Ajout du nouveau fichier.
-        Localisation.all.frere := Nouv;
+        Localisation.all.Frere := Nouv;
 
         
 
@@ -324,7 +268,7 @@ package body P_Arbre is
 ----------------------------------------------------------------------
     function Est_Dossier_Plein (F_Dos : in T_Arbre) return Boolean is
     begin
-        return Est_Dossier (F_Dos) and F_Dos.all.fils /= null;
+        return Est_Dossier (F_Dos) and F_Dos.all.Fils /= null;
 
     end Est_Dossier_Plein;
 ----------------------------------------------------------------------
@@ -334,7 +278,7 @@ package body P_Arbre is
     procedure Put_Perm (P_Perm : in T_Tab_Perm) is
     begin
         for i in P_Perm'Range loop
-            Put(P_Perm(i));
+            Put (P_Perm(i));
         end loop;
 
     end Put_Perm;
@@ -360,4 +304,4 @@ package body P_Arbre is
 
 
 
-end P_Arbre ;
+end P_Arbre;

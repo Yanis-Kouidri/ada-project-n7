@@ -3,6 +3,7 @@ with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with P_Arbre; use P_Arbre;
 with P_Commande; use P_Commande;
+with Ada.Characters.Latin_1 ; use Ada.Characters.Latin_1 ;
 with P_Liste_gen;
 
 procedure main_sgf is
@@ -29,21 +30,10 @@ begin
     -- Initialisation de l'arbre
     Ajouter(Racine, "", True, null);
     Rep_Courant := Racine;
-
-    -- Ajout d'un dossier
-    --Ajouter_Dans_Dos (Racine, "test_1", True);
-    --Descendre (Rep_Courant, "test_1");
-
-
---    Commande_Traitee := Decoupage(To_String(Commande_Brute), ' ');
---    Test_Decoupage (To_String (Commande_Brute), ' ');
-    
-
---    Put_Line(To_String(Commande_Simple));
     
     while not Quitter loop
         
-        Put ("ykouidri@ada-project:");
+        Put (ESC & "[92m" & "ykouidri@ada-project" & ESC & "[0m" & ":");
         P_Pwd (Rep_Courant);
         Put (" > "); -- Le prompt
 
@@ -54,7 +44,7 @@ begin
         if Commande_Brute /= Null_Unbounded_String then 
 
             -- Récupération du premier mot de la commande tapée par l'utilisateur :
-            Commande_Simple := To_Unbounded_String (Recup_Commande (To_String (Commande_Brute)));
+            Commande_Simple := To_Unbounded_String (Recup_Arg (To_String (Commande_Brute), 0));
 
             begin    
                 case T_Commandes'Value (To_String (Commande_Simple)) is 
