@@ -1,3 +1,51 @@
+-- Raffinage :
+-- R0 : Permettre à l'utilisateur d'utiliser un SGF avec des lignes de commande.
+--
+-- R1 : Comment "Permettre à l'utilisateur d'utiliser un SGF avec des lignes de commande" ?
+--      Déclarer les commandes  (enum_commande : out énumération)
+--      Initialiser le SGF  (Racine, Rep_Courant ; in out T_Arbre)
+--      Répéter
+--          Demander la commande à l'utilisateur  (Commande : out String)
+--          Traiter la commande de l'utilisateur  (Commande : in String)
+--      JusquA "L'utilisateur souhaite quitter"  (Quitter : in Boolean)
+-- 
+-- R2 : Comment "Déclarer les commandes" ?
+--      Créer une énumaration de l'ensemble des commandes (enum_commande : out énumération)
+--
+-- R2 : Comment "Initialiser le SGF" ?
+--      Ajouter (Racine, "", vrai, null)  (Racine ; in out T_Arbre)
+--      Rep_Courant <- Racine  (Rep_courant : out T_Arbre, Racine : in T_Arbre)
+--
+-- R2 : Comment "Demander la commande à l'utilisateur"  ?
+--      Lire (Commande)   (Commande : out String)
+--
+-- R2 : Comment "Traiter la commande de l'utilisateur" ?
+--      Récupérer le premier élément de la commande   (Commande : in String, mot_cle : out String)
+--      Executer la commande associé avec les arguments   (mot_clé, Commande : in String ; enum_commande : in énumération ; Rep_courant : in T_Arbre))
+--
+-- R2 : Comment "L'utilisateur souhaite quitter" ?
+--      Quitter = vrai
+--
+-- R3 : Comment "Récupérer le premier élément de la commande" ?
+--      Recup_Arg (Commande, O)   (mot_cle : out String)
+--
+-- R3 : Comment "Executer la commande associé avec les argument" ?
+--      Selon Mot_cle  (enum_commande : in énumération)
+--          Cas "ls" faire : P_ls (Rep_courant)  (Rep_courant : in T_Arbre)
+--          Cas "touch" faire P_Touch (Rep_Courant, Recup_Arg (Commande, 1))  (Rep_courant : in T_Arbre, commande : in String)
+--          [...]
+--          Cas Autre faire : Afficher ("Commande inconnue")
+--      Fin Selon
+--
+--      
+
+
+
+
+
+
+
+
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
