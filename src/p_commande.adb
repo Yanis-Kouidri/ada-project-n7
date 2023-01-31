@@ -1,6 +1,6 @@
-with Ada.Integer_Text_IO, Ada.Text_IO ;
-use Ada.Integer_Text_IO, Ada.Text_IO ;
 with Ada.Unchecked_Deallocation ; 
+with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 
 package body P_Commande is 
 
@@ -130,7 +130,6 @@ package body P_Commande is
 ----------------------------------------------------------------------
     procedure P_Rm (P_Courant : in T_Arbre ; P_A_Supp : in String) is
         Cible, Temp, A_Supp : T_Arbre := null;
-        Valide : Boolean := False;
 
     begin
         A_Supp := Descendre (P_Courant, P_A_Supp);

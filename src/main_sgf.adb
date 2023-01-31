@@ -47,12 +47,10 @@
 
 
 with Ada.Text_IO; use Ada.Text_IO;
-with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with P_Arbre; use P_Arbre;
 with P_Commande; use P_Commande;
 with Ada.Characters.Latin_1 ; use Ada.Characters.Latin_1 ;
-with P_Liste_gen;
 
 procedure main_sgf is
 
@@ -69,7 +67,6 @@ procedure main_sgf is
 
     Racine, Rep_Courant : T_Arbre;
     Commande_Brute : Unbounded_String;
-    Commande_Traitee : P_Arbre.P_Liste_Ustring.T_Liste_Chainee ; 
     Commande_Simple : Unbounded_String;
     Quitter : Boolean := False;
 

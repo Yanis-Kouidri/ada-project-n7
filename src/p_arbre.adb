@@ -23,7 +23,7 @@ package body P_Arbre is
 ----------------------------------------------------------------------
     function Decoupage (F_Chaine : in String ; F_Cible : in Character) return P_Liste_Ustring.T_Liste_Chainee is
         -- Copie de la chaine de caractère passée en paramètre + ajout du caractère de découpage pour être sur de tout récupérer
-        Commande : String := F_Chaine & F_Cible; 
+        Commande : constant String := F_Chaine & F_Cible; 
         Element : Unbounded_String; -- Chaque élément de la chaine à découpé
         Debut, Fin : Integer := 0; -- Debut et fin des éléments à découpé
         Resultat : P_Liste_Ustring.T_Liste_Chainee ; -- Pointeur sur T_Cellule d'une liste chainée d'unbounded string
@@ -144,7 +144,6 @@ package body P_Arbre is
 
 ----------------------------------------------------------------------
     procedure Afficher_Dos (F_Parent : in T_Arbre) is
-        Temp : T_Arbre := null;
     begin
         Afficher_Frere (F_Parent.all.Fils);
 
